@@ -27,27 +27,22 @@ export function ActivityLog() {
     setInput("");
 
     try {
+      const apiKey = typeof window !== "undefined" ? localStorage.getItem("GEMINI_API_KEY") : null;
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
       };
-      // 1. Parse Input
+      if (apiKey) headers["x-api-key"] = apiKey;
       const parseRes = await fetch("/api/parse", {
         method: "POST",
         headers,
         body: JSON.stringify({ input: rawInput, region }),
       });
-      if (!parseRes.ok) throw new Error("Failed to parse");
+      if (!parseRes.ok) {
+        const errBody = await parseRes.json().catch(() => ({}));
+        throw new Error(errBody.error || "Failed to parse input");
+      }
       const parsed = await parseRes.json();
 
-      if (
-        !parsed.category ||
-        !parsed.subCategory ||
-        parsed.amount === undefined
-      ) {
-        throw new Error("Could not understand input.");
-      }
-
-      // 2. Synchronous UI Update
       const newActivityData = calculateActivityEmissions(
         parsed.category,
         parsed.subCategory,
@@ -62,7 +57,6 @@ export function ActivityLog() {
       };
       addActivity(newActivity);
 
-      // 3. Background AI Tasks (Recommendations & Insights)
       const updatedHistory = [...activities, newActivity];
       const budget = parseFloat(localStorage.getItem("CARBON_BUDGET") || "10");
 
@@ -82,7 +76,8 @@ export function ActivityLog() {
 
         if (recRes.ok) {
           const recData = await recRes.json();
-          if (recData.recommendations?.length) setRecommendations(recData.recommendations);
+          if (recData.recommendations?.length)
+            setRecommendations(recData.recommendations);
         }
         if (insRes.ok) {
           const insData = await insRes.json();
