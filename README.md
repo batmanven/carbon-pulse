@@ -47,7 +47,7 @@ User Input ("I drove 12km")
 ### Tech Stack
 
 - **Frontend**: Next.js 16, React 19, Tailwind CSS 4, Framer Motion, Recharts
-- **AI Layer**: Google Antigravity SDK + Gemini 3.5 Flash
+- **AI Layer**: Google Gemini API (via `@google/genai` SDK) — Gemini model-powered NLP parsing, recommendations, and insights
 - **State**: Zustand
 - **Validation**: Zod
 - **Testing**: Jest + React Testing Library
@@ -134,7 +134,7 @@ npm run test
 
 ## Submission Notes
 
-- **Platform**: Google Antigravity 2.0 (subagent architecture via SDK)
+- **Platform**: Built with Next.js 16 on Node.js
 - **Live Preview**: Run `npm run dev` and open http://localhost:3000
 - **API Key**: Set via `.env` or `/dashboard/settings` page
 - **Demo Data**: Click "Load Demo Data" on the dashboard empty state

@@ -52,6 +52,12 @@ describe("API Routes", () => {
       expect(data.error).toBeDefined();
     });
 
+    it("returns 400 for empty input", async () => {
+      const req = createMockRequest({ input: "" });
+      const res = await parseRoute(req);
+      expect(res.status).toBe(400);
+    });
+
     it("returns 200 and handles mock AI response via graceful degradation on error (since AI key is missing in tests)", async () => {
       const req = createMockRequest({ input: "I drove 10km" });
       const res = await parseRoute(req);
@@ -59,6 +65,12 @@ describe("API Routes", () => {
       expect(res.status).toBe(200);
       const data = await res.json();
       expect(data).toBeDefined();
+    });
+
+    it("accepts region parameter", async () => {
+      const req = createMockRequest({ input: "drove 10km", region: "india" });
+      const res = await parseRoute(req);
+      expect(res.status).toBe(200);
     });
   });
 
