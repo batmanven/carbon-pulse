@@ -1,8 +1,12 @@
 "use client";
 import { PieChart } from "lucide-react";
-import { useStore } from "../../../lib/store";
+import { useStore } from "@/lib/store";
 import { motion } from "framer-motion";
 
+/**
+ * Insights Page component rendering the personalized AI insight text,
+ * daily budget utilization meter, and high-leverage recommendations.
+ */
 export default function InsightsPage() {
   const {
     recommendations,
@@ -17,10 +21,10 @@ export default function InsightsPage() {
     <div className="max-w-6xl mx-auto px-6 py-12">
       <header className="mb-12">
         <h1 className="text-[40px] font-medium text-ink tracking-[-1.0px] mb-2 flex items-center gap-3">
-          AI Insights
+          Personalized Insights
         </h1>
         <p className="text-muted font-medium">
-          Deep-dive analysis of your carbon footprint powered by Gemini.
+          Understand your carbon footprint and discover ways to reduce it, powered by CarbonKeeper and Gemini AI.
         </p>
       </header>
 
@@ -32,7 +36,7 @@ export default function InsightsPage() {
                 className="w-5 h-5 text-brand-pink"
                 aria-hidden="true"
               />
-              Budget Analysis
+              Understand: Budget Analysis
             </h2>
             <div className="relative pt-4">
               <div className="flex justify-between text-[14px] font-bold text-ink mb-2">
@@ -63,7 +67,7 @@ export default function InsightsPage() {
         <div className="lg:col-span-2">
           <div className="bg-surface-soft border border-hairline rounded-[24px] p-8 shadow-sm h-full">
             <h3 className="text-[20px] font-semibold text-ink mb-6 flex items-center gap-2 tracking-tight">
-              High-Leverage AI Swaps
+              Reduce: High-Leverage AI Swaps
             </h3>
 
             {isProcessing ? (

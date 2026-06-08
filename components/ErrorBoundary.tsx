@@ -12,12 +12,27 @@ interface State {
   error?: Error;
 }
 
+/**
+ * ErrorBoundary React component capturing crashes in child component trees,
+ * preventing total app failure and displaying a friendly error recovery state.
+ */
 export class ErrorBoundary extends Component<Props, State> {
+  /**
+   * Initializes the error boundary component state.
+   *
+   * @param {Props} props - Children elements list.
+   */
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
   }
 
+  /**
+   * React lifecycle method invoked when an exception is thrown in a child component.
+   *
+   * @param {Error} error - The caught exception.
+   * @returns {State} The updated error state values.
+   */
   static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
   }

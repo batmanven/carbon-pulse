@@ -1,17 +1,16 @@
-import { Leaf } from "lucide-react";
-
-export default function Loading() {
+export default function DashboardLoading() {
   return (
-    <div className="w-full min-h-screen flex items-center justify-center bg-canvas">
-      <div className="flex flex-col items-center gap-4">
-        <div className="relative flex items-center justify-center w-16 h-16">
-          <div className="absolute inset-0 border-4 border-brand-teal/20 rounded-full"></div>
-          <div className="absolute inset-0 border-4 border-brand-teal rounded-full border-t-transparent animate-spin"></div>
-          <Leaf className="w-6 h-6 text-brand-teal" />
-        </div>
-        <p className="text-ink font-medium tracking-tight animate-pulse">
-          Loading dashboard...
-        </p>
+    <div className="max-w-6xl mx-auto px-6 py-12">
+      <div className="mb-12">
+        <div className="h-10 w-64 bg-surface-strong rounded-lg animate-pulse mb-2" />
+        <div className="h-5 w-96 bg-surface-strong rounded-lg animate-pulse" />
+      </div>
+      <div className="mb-12">
+        <div className="h-16 bg-surface-strong rounded-2xl animate-pulse" />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="h-96 bg-surface-strong rounded-[24px] animate-pulse" />
+        <div className="col-span-2 h-64 bg-surface-strong rounded-[24px] animate-pulse" />
       </div>
     </div>
   );

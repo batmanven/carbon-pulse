@@ -8,6 +8,13 @@ export const CO2_EQUIVALENTS = [
   { threshold: 200.0, text: "a flight from NY to LA", value: 150.0 },
 ];
 
+/**
+ * Converts raw kg CO2 emissions into a relatable real-world comparison.
+ * Finds the highest threshold the input matches and returns formatted comparison text.
+ *
+ * @param {number} kgCO2 - The carbon footprint amount in kg CO2e.
+ * @returns {string} Human-friendly translation string.
+ */
 export function getEquivalent(kgCO2: number): string {
   if (kgCO2 <= 0) return "Zero emissions!";
   

@@ -37,7 +37,7 @@ describe("InsightsPage", () => {
 
   it("renders the header", () => {
     render(<InsightsPage />);
-    expect(screen.getByText("AI Insights")).toBeInTheDocument();
+    expect(screen.getByText("Personalized Insights")).toBeInTheDocument();
   });
 
   it("shows log more activities message when no recommendations", () => {

@@ -1,7 +1,17 @@
 import { GoogleGenAI } from "@google/genai";
-import { Activity } from "../types";
-import { getRegionLabel } from "../emissions";
+import { Activity } from "@/lib/types";
+import { getRegionLabel } from "@/lib/emissions";
 
+/**
+ * Invokes Gemini Flash to generate a short, encouraging carbon insight sentence
+ * based on the user's consumption percentage of their daily budget.
+ *
+ * @param {Activity[]} history - User's historical activity log list.
+ * @param {number} budget - The daily carbon allowance limit.
+ * @param {string} [apiKeyOverride] - Optional API key override.
+ * @param {string} [region] - Optional user region context.
+ * @returns {Promise<string>} The generated insight sentence.
+ */
 export async function generateInsight(
   history: Activity[],
   budget: number,

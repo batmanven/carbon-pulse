@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
-import { getRegionLabel } from "../emissions";
-import { parseOutputSchema } from "../schema";
+import { getRegionLabel } from "@/lib/emissions";
+import { parseOutputSchema } from "@/lib/schema";
 
 export interface ParseResult {
   category?: string;
@@ -8,6 +8,13 @@ export interface ParseResult {
   amount?: number;
 }
 
+/**
+ * Safely calls Google Gen AI content generator, wrapping any network exceptions.
+ *
+ * @param {GoogleGenAI} ai - The initialized GoogleGenAI instance.
+ * @param {string} prompt - The payload prompt to generate.
+ * @returns {Promise<string | null>} The text response or null on error.
+ */
 async function generateContentSafe(
   ai: GoogleGenAI,
   prompt: string,
@@ -24,6 +31,15 @@ async function generateContentSafe(
   }
 }
 
+/**
+ * Analyzes natural language activity logs using Gemini Flash and maps them into
+ * a structured domain entity parameters object.
+ *
+ * @param {string} input - Raw natural language query.
+ * @param {string} [apiKeyOverride] - Optional judge api key override.
+ * @param {string} [region] - Optional user region.
+ * @returns {Promise<ParseResult>} The parsed result with structured parameters.
+ */
 export async function parseNaturalLanguage(
   input: string,
   apiKeyOverride?: string,

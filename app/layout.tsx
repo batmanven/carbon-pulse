@@ -6,10 +6,14 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "MYCELIUM",
-  description: "AI-powered personal carbon coach.",
+  title: "CarbonKeeper — Understand, Track, and Reduce Your Carbon Footprint",
+  description: "AI-powered personal carbon coach. Log activities naturally, get instant CO₂ calculations, personalized reduction plans, and track your impact over time.",
 };
 
+/**
+ * Root Layout element wrapping the entire CarbonKeeper Next.js application shell,
+ * establishing global error boundaries, font classes, and context toasts.
+ */
 export default function RootLayout({
   children,
 }: {

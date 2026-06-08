@@ -1,11 +1,15 @@
 "use client";
 import { useState } from "react";
-import { useStore } from "../lib/store";
+import { useStore } from "@/lib/store";
 import { motion } from "framer-motion";
 import { Terminal, Send } from "lucide-react";
 import { toast } from "sonner";
-import { calculateActivityEmissions } from "../lib/agents/calculator";
+import { calculateActivityEmissions } from "@/lib/agents/calculator";
 
+/**
+ * ActivityLog component rendering the command-palette input bar
+ * that supports natural language parsing to track actions.
+ */
 export function ActivityLog() {
   const [input, setInput] = useState("");
   const {
@@ -88,8 +92,7 @@ export function ActivityLog() {
       }
 
       toast.success("Activity logged and analyzed!");
-    } catch (err) {
-      console.error(err);
+    } catch {
       setInput(rawInput);
       toast.error("Failed to process your activity. Please try again.");
     } finally {

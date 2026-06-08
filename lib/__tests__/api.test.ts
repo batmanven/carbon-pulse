@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { POST as parseRoute } from "../../app/api/parse/route";
 import { POST as recommendRoute } from "../../app/api/recommend/route";
 import { POST as insightRoute } from "../../app/api/insight/route";
@@ -13,7 +13,7 @@ jest.mock("@google/genai", () => ({
 
 jest.mock("next/server", () => ({
   NextResponse: {
-    json: (body: any, init?: any) => {
+    json: (body: unknown, init?: { status?: number }) => {
       return {
         status: init?.status || 200,
         json: async () => body,
@@ -24,16 +24,16 @@ jest.mock("next/server", () => ({
 
 if (typeof global.Request === "undefined") {
   global.Request = class Request {
-    constructor(input: any, init?: any) {}
-  } as any;
+    constructor(_input: unknown, _init?: unknown) {}
+  } as unknown as typeof Request;
 }
 if (typeof global.Response === "undefined") {
   global.Response = class Response {
-    constructor(body?: any, init?: any) {}
-  } as any;
+    constructor(_body?: unknown, _init?: unknown) {}
+  } as unknown as typeof Response;
 }
 
-function createMockRequest(body: any, headers: Record<string, string> = {}) {
+function createMockRequest(body: unknown, headers: Record<string, string> = {}) {
   return {
     json: async () => body,
     headers: {

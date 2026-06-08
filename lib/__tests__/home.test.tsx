@@ -10,40 +10,41 @@ jest.mock("next/link", () => {
 });
 
 jest.mock("lucide-react", () => ({
-  Leaf: () => <span>Leaf</span>,
   Target: () => <span>Target</span>,
-  RefreshCw: () => <span>RefreshCw</span>,
   Zap: () => <span>Zap</span>,
+  TrendingDown: () => <span>TrendingDown</span>,
+  BarChart3: () => <span>BarChart3</span>,
 }));
 
 describe("Home landing page", () => {
   it("renders the headline", () => {
     render(<Home />);
-    expect(screen.getByText(/Track your life/)).toBeInTheDocument();
+    expect(screen.getByText(/Understand, track, and/)).toBeInTheDocument();
   });
 
   it("renders the tagline", () => {
     render(<Home />);
-    expect(screen.getByText(/A playful, lightning-fast tracker/)).toBeInTheDocument();
+    expect(screen.getByText(/CarbonKeeper is your personal carbon coach/)).toBeInTheDocument();
   });
 
   it("renders CTA button linking to dashboard", () => {
     render(<Home />);
-    const cta = screen.getByText("Start Tracking Now →");
+    const cta = screen.getByText("Start Reducing Now →");
     expect(cta).toBeInTheDocument();
     expect(cta.closest("a")).toHaveAttribute("href", "/dashboard");
   });
 
-  it("renders all three feature steps", () => {
+  it("renders all four pillars", () => {
     render(<Home />);
-    expect(screen.getByText("1. Tell us what you did")).toBeInTheDocument();
-    expect(screen.getByText("2. AI Calculates the impact")).toBeInTheDocument();
-    expect(screen.getByText("3. Discover effortless swaps")).toBeInTheDocument();
+    expect(screen.getByText("Understand")).toBeInTheDocument();
+    expect(screen.getByText("Track")).toBeInTheDocument();
+    expect(screen.getByText("Reduce")).toBeInTheDocument();
+    expect(screen.getByText("Personalized Insights")).toBeInTheDocument();
   });
 
   it("renders bottom CTA section", () => {
     render(<Home />);
-    expect(screen.getByText("Ready to take action?")).toBeInTheDocument();
+    expect(screen.getByText("Ready to reduce your footprint?")).toBeInTheDocument();
   });
 
   it("renders bottom dashboard link", () => {

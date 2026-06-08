@@ -31,7 +31,7 @@ describe("LogsPage", () => {
 
   it("renders the header", () => {
     render(<LogsPage />);
-    expect(screen.getByText("Activity Logs")).toBeInTheDocument();
+    expect(screen.getByText("Track: Activity Logs & Carbon History")).toBeInTheDocument();
   });
 
   it("shows empty state when no activities", () => {

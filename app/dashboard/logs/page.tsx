@@ -1,8 +1,12 @@
 "use client";
-import { useStore } from "../../../lib/store";
+import { useStore } from "@/lib/store";
 import { format } from "date-fns";
 import { Trash2, FileText } from "lucide-react";
 
+/**
+ * Activity Logs Page component displaying the tabular history of all user-logged activities
+ * with calculated carbon footprints and equivalents.
+ */
 export default function LogsPage() {
   const { activities, clearActivities } = useStore();
 
@@ -11,11 +15,10 @@ export default function LogsPage() {
       <header className="mb-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-[40px] font-medium text-ink tracking-[-1.0px] mb-2">
-            Activity Logs
+            Track: Activity Logs & Carbon History
           </h1>
           <p className="text-muted font-medium">
-            A complete history of every carbon-emitting activity you have
-            logged.
+            Understand your footprint by reviewing the history of all logged activities.
           </p>
         </div>
         {activities.length > 0 && (

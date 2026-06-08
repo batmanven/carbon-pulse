@@ -1,4 +1,4 @@
-# MYCELIUM — AI Evaluation-Optimized MVP
+# CarbonKeeper — AI Evaluation-Optimized MVP
 
 This implementation plan is built exclusively to maximize the score across the 5 AI Judge Evaluation Criteria _while answering every word of the problem statement_. Every feature maps directly to: _"help individuals understand, track, and reduce their carbon footprint through simple actions and personalized insights."_
 
@@ -69,7 +69,7 @@ Plus relatable equivalents for every value (e.g., "2.04 kg = charging your phone
 ### 3. File Structure
 
 ```
-carbon-pulse/
+carbonkeeper/
 ├── package.json               # Next.js 14, Antigravity SDK, Zustand, zod, papaparse
 ├── tsconfig.json               # strict: true
 ├── jest.config.ts

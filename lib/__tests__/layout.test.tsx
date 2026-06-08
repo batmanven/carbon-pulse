@@ -38,9 +38,9 @@ describe("DashboardLayout", () => {
         <div>Page content</div>
       </DashboardLayout>,
     );
-    expect(screen.getByText("Overview")).toBeInTheDocument();
-    expect(screen.getByText("Activity Logs")).toBeInTheDocument();
-    expect(screen.getByText("Insights")).toBeInTheDocument();
+    expect(screen.getByText("Track Activities")).toBeInTheDocument();
+    expect(screen.getByText("Understand Logs")).toBeInTheDocument();
+    expect(screen.getByText("Reduce Carbon")).toBeInTheDocument();
     expect(screen.getByText("Settings")).toBeInTheDocument();
   });
 
@@ -59,7 +59,7 @@ describe("DashboardLayout", () => {
         <div>Content</div>
       </DashboardLayout>,
     );
-    const overview = screen.getByText("Overview").closest("a");
+    const overview = screen.getByText("Track Activities").closest("a");
     expect(overview?.className).toContain("shadow-sm");
   });
 
@@ -103,7 +103,7 @@ describe("DashboardLayout", () => {
         <div>Content</div>
       </DashboardLayout>,
     );
-    const brands = screen.getAllByText("MYCELIUM");
+    const brands = screen.getAllByText("CarbonKeeper");
     expect(brands).toHaveLength(2);
     brands.forEach((brand) => {
       expect(brand.closest("a")).toHaveAttribute("href", "/");

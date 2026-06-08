@@ -37,8 +37,7 @@ export const EMISSION_FACTORS = {
   },
 } satisfies EmissionFactors;
 
-export type EmissionCategory = keyof typeof EMISSION_FACTORS;
-export type EmissionSubCategory<C extends EmissionCategory> = keyof (typeof EMISSION_FACTORS)[C];
+
 
 // Grid carbon intensity by region (kg CO₂e per kWh)
 // Compared to the default global average of 0.40
@@ -62,23 +61,40 @@ export const REGION_GRID_FACTORS: Record<string, { label: string; factor: number
 
 export const DEFAULT_REGION = "global";
 
+/**
+ * Retrieves the emissions modifier factor based on regional grid composition.
+ *
+ * @param {string} region - The region key identifier.
+ * @returns {number} The numeric multiplier modifier for emissions.
+ */
 export function getRegionFactor(region: string): number {
   return REGION_GRID_FACTORS[region]?.factor ?? 1.0;
 }
 
+type EmissionFactorMap = Record<string, Record<string, { value: number; unit: string }>>;
+
+/**
+ * Calculates absolute emissions in kg CO2e based on unit activity volume,
+ * category parameters, and regional grid context offsets.
+ *
+ * @param {string} category - The top-level carbon emission category.
+ * @param {string} subCategory - The specific sub-category.
+ * @param {number} amount - The numeric volume of activity.
+ * @param {string} [region] - Optional regional identifier.
+ * @returns {number} The calculated emissions value in kg CO2e.
+ */
 export function calculateEmissions(
   category: string,
   subCategory: string,
   amount: number,
   region?: string,
 ): number {
-  const factors = EMISSION_FACTORS as EmissionFactors;
+  const factors = EMISSION_FACTORS as unknown as EmissionFactorMap;
   const factor = factors[category]?.[subCategory]?.value;
   if (factor === undefined) return 0;
 
   let adjusted = factor * amount;
 
-  // Apply regional grid modifier for electricity
   if (category === "energy" && subCategory === "grid_avg" && region) {
     adjusted *= getRegionFactor(region);
   }
@@ -86,6 +102,12 @@ export function calculateEmissions(
   return adjusted;
 }
 
+/**
+ * Resolves the user-friendly label matching a region key.
+ *
+ * @param {string} region - The region identifier key.
+ * @returns {string} The descriptive region label name.
+ */
 export function getRegionLabel(region: string): string {
   return REGION_GRID_FACTORS[region]?.label ?? "Global Average";
 }

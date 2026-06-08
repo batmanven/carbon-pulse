@@ -2,10 +2,14 @@
 import { Settings2, Database, Globe } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useStore } from "../../../lib/store";
-import { REGION_GRID_FACTORS, DEFAULT_REGION } from "../../../lib/emissions";
+import { useStore } from "@/lib/store";
+import { REGION_GRID_FACTORS, DEFAULT_REGION } from "@/lib/emissions";
 import type { JSX } from "react";
 
+/**
+ * Settings Page component allowing configuration of daily carbon limits
+ * and regional grid offsets to personalize calculation methodologies.
+ */
 export default function SettingsPage(): JSX.Element {
   const setDailyBudget = useStore((s) => s.setDailyBudget);
   const setRegion = useStore((s) => s.setRegion);

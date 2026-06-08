@@ -4,6 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, List, BarChart2, Settings, Menu, X } from "lucide-react";
 
+/**
+ * Layout wrapper for the CarbonKeeper dashboard routes, rendering the navigation sidebar
+ * and managing responsive mobile navigation slide-over menus.
+ */
 export default function DashboardLayout({
   children,
 }: {
@@ -13,9 +17,9 @@ export default function DashboardLayout({
   const pathname = usePathname();
 
   const links = [
-    { href: "/dashboard", icon: Home, label: "Overview" },
-    { href: "/dashboard/logs", icon: List, label: "Activity Logs" },
-    { href: "/dashboard/insights", icon: BarChart2, label: "Insights" },
+    { href: "/dashboard", icon: Home, label: "Track Activities" },
+    { href: "/dashboard/logs", icon: List, label: "Understand Logs" },
+    { href: "/dashboard/insights", icon: BarChart2, label: "Reduce Carbon" },
   ];
 
   return (
@@ -38,7 +42,7 @@ export default function DashboardLayout({
             href="/"
             className="text-[20px] font-semibold text-ink tracking-tight flex items-center gap-2"
           >
-            MYCELIUM
+            CarbonKeeper
           </Link>
           <button
             className="md:hidden text-ink"
@@ -90,7 +94,7 @@ export default function DashboardLayout({
             href="/"
             className="text-[18px] font-semibold text-ink tracking-tight flex items-center gap-2"
           >
-            MYCELIUM
+            CarbonKeeper
           </Link>
           <button
             className="text-ink"
