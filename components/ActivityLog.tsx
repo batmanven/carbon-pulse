@@ -6,18 +6,70 @@ import { Terminal, Send } from "lucide-react";
 import { toast } from "sonner";
 import { calculateActivityEmissions } from "@/lib/agents/calculator";
 
+function getApiHeaders(): Record<string, string> {
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  if (typeof window !== "undefined") {
+    const key = localStorage.getItem("GEMINI_API_KEY");
+    if (key) headers["x-api-key"] = key;
+  }
+  return headers;
+}
+
+async function parseActivity(input: string, region: string, headers: Record<string, string>) {
+  const res = await fetch("/api/parse", {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ input, region }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || "Failed to parse input");
+  }
+  return res.json();
+}
+
+function buildActivity(rawInput: string, parsed: { category: string; subCategory: string; amount: number }, region: string) {
+  const data = calculateActivityEmissions(parsed.category, parsed.subCategory, parsed.amount, rawInput, region);
+  return { id: Date.now().toString(), timestamp: new Date().toISOString(), ...data };
+}
+
+async function fetchAIFeedback(
+  history: import("@/lib/types").Activity[],
+  region: string,
+  budget: number,
+  headers: Record<string, string>,
+  onRecommendations: (recs: import("@/lib/types").Recommendation[]) => void,
+  onInsight: (insight: string) => void,
+) {
+  try {
+    const [recRes, insRes] = await Promise.all([
+      fetch("/api/recommend", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ history, region }),
+      }),
+      fetch("/api/insight", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ history, budget, region }),
+      }),
+    ]);
+    if (recRes.ok) {
+      const data = await recRes.json();
+      if (data.recommendations?.length) onRecommendations(data.recommendations);
+    }
+    if (insRes.ok) {
+      const data = await insRes.json();
+      if (data.insight) onInsight(data.insight);
+    }
+  } catch {
+    // Background AI failures are non-critical
+  }
+}
+
 export function ActivityLog() {
   const [input, setInput] = useState("");
-  const {
-    activities,
-    addActivity,
-    setRecommendations,
-    setInsight,
-    setIsProcessing,
-    isProcessing,
-    region,
-    dailyBudget,
-  } = useStore();
+  const { activities, addActivity, setRecommendations, setInsight, setIsProcessing, isProcessing, region, dailyBudget } = useStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,66 +80,13 @@ export function ActivityLog() {
     setInput("");
 
     try {
-      const apiKey = typeof window !== "undefined" ? localStorage.getItem("GEMINI_API_KEY") : null;
-      const headers: Record<string, string> = {
-        "Content-Type": "application/json",
-      };
-      if (apiKey) headers["x-api-key"] = apiKey;
-      const parseRes = await fetch("/api/parse", {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ input: rawInput, region }),
-      });
-      if (!parseRes.ok) {
-        const errBody = await parseRes.json().catch(() => ({}));
-        throw new Error(errBody.error || "Failed to parse input");
-      }
-      const parsed = await parseRes.json();
+      const headers = getApiHeaders();
+      const parsed = await parseActivity(rawInput, region, headers);
+      const activity = buildActivity(rawInput, parsed, region);
+      addActivity(activity);
 
-      const newActivityData = calculateActivityEmissions(
-        parsed.category,
-        parsed.subCategory,
-        parsed.amount,
-        rawInput,
-        region,
-      );
-      const newActivity = {
-        id: Date.now().toString(),
-        timestamp: new Date().toISOString(),
-        ...newActivityData,
-      };
-      addActivity(newActivity);
-
-      const updatedHistory = [...activities, newActivity];
-      const budget = dailyBudget;
-
-      try {
-        const [recRes, insRes] = await Promise.all([
-          fetch("/api/recommend", {
-            method: "POST",
-            headers,
-            body: JSON.stringify({ history: updatedHistory, region }),
-          }),
-          fetch("/api/insight", {
-            method: "POST",
-            headers,
-            body: JSON.stringify({ history: updatedHistory, budget, region }),
-          }),
-        ]);
-
-        if (recRes.ok) {
-          const recData = await recRes.json();
-          if (recData.recommendations?.length)
-            setRecommendations(recData.recommendations);
-        }
-        if (insRes.ok) {
-          const insData = await insRes.json();
-          if (insData.insight) setInsight(insData.insight);
-        }
-      } catch {
-        // Background AI failures are non-critical — activity is already logged
-      }
-
+      const updatedHistory = [...activities, activity];
+      fetchAIFeedback(updatedHistory, region, dailyBudget, headers, setRecommendations, setInsight);
       toast.success("Activity logged and analyzed!");
     } catch {
       setInput(rawInput);
