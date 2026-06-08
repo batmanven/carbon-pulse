@@ -1,6 +1,34 @@
 import { render, act } from "@testing-library/react";
 import { axe } from "jest-axe";
 
+jest.mock("next/dynamic", () => {
+  const React = jest.requireActual("react");
+  return function mockDynamic() {
+    const Placeholder = (props: Record<string, unknown>) =>
+      React.createElement("div", { ...props, "data-testid": "mock-dynamic" });
+    Placeholder.displayName = "DynamicPlaceholder";
+    return Placeholder;
+  };
+});
+
+jest.mock("framer-motion", () => {
+  const React = jest.requireActual("react");
+  const createProxy = (tag: string) => {
+    const C = ({ children, ...props }: Record<string, unknown>) =>
+      React.createElement(tag, props, children);
+    C.displayName = `motion.${tag}`;
+    return C;
+  };
+  return {
+    motion: new Proxy(
+      {},
+      { get: (_target: never, tag: string) => createProxy(tag) },
+    ),
+    AnimatePresence: ({ children }: { children: React.ReactNode }) =>
+      React.createElement(React.Fragment, null, children),
+  };
+});
+
 import Home from "../../app/page";
 import DashboardPage from "../../app/dashboard/page";
 import SettingsPage from "../../app/dashboard/settings/page";

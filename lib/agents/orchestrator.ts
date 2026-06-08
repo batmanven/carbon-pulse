@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+import { getAIClient, generateContentSafe } from "@/lib/agents/client";
 import { getRegionLabel } from "@/lib/emissions";
 import { parseOutputSchema } from "@/lib/schema";
 
@@ -8,46 +8,13 @@ export interface ParseResult {
   amount?: number;
 }
 
-/**
- * Safely calls Google Gen AI content generator, wrapping any network exceptions.
- *
- * @param {GoogleGenAI} ai - The initialized GoogleGenAI instance.
- * @param {string} prompt - The payload prompt to generate.
- * @returns {Promise<string | null>} The text response or null on error.
- */
-async function generateContentSafe(
-  ai: GoogleGenAI,
-  prompt: string,
-): Promise<string | null> {
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-flash-latest",
-      contents: prompt,
-      config: { responseMimeType: "application/json" },
-    });
-    return response.text || null;
-  } catch {
-    return null;
-  }
-}
 
-/**
- * Analyzes natural language activity logs using Gemini Flash and maps them into
- * a structured domain entity parameters object.
- *
- * @param {string} input - Raw natural language query.
- * @param {string} [apiKeyOverride] - Optional judge api key override.
- * @param {string} [region] - Optional user region.
- * @returns {Promise<ParseResult>} The parsed result with structured parameters.
- */
 export async function parseNaturalLanguage(
   input: string,
   apiKeyOverride?: string,
   region?: string,
 ): Promise<ParseResult> {
-  const ai = new GoogleGenAI({
-    apiKey: apiKeyOverride || process.env.GEMINI_API_KEY,
-  });
+  const ai = getAIClient(apiKeyOverride);
 
   const regionContext = region
     ? `User's Region: ${getRegionLabel(region)}`

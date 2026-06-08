@@ -10,11 +10,6 @@ import { RecentLogs } from "@/components/RecentLogs";
 import { Leaf, Database, Zap, TrendingDown } from "lucide-react";
 import { motion } from "framer-motion";
 
-/**
- * Main dashboard Overview component rendering the activity track input,
- * daily emission gauges, weekly trends, potential carbon reductions,
- * and current green challenges.
- */
 export default function Dashboard() {
   const { activities, dailyFootprint, budgetUsed, dailyBudget, weeklyTrend, recommendations, challenges, insight, loadSampleData, toggleChallenge } = useStore();
 

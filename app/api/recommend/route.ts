@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getRecommendations } from "@/lib/agents/recommender";
 import { recommendSchema } from "@/lib/schema";
 import { z } from "zod";
-import { aiCache } from "../../../lib/cache";
+import { aiCache } from "@/lib/cache";
 
 export async function POST(req: Request) {
   try {

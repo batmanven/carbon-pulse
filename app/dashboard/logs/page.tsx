@@ -3,10 +3,6 @@ import { useStore } from "@/lib/store";
 import { format } from "date-fns";
 import { Trash2, FileText } from "lucide-react";
 
-/**
- * Activity Logs Page component displaying the tabular history of all user-logged activities
- * with calculated carbon footprints and equivalents.
- */
 export default function LogsPage() {
   const { activities, clearActivities } = useStore();
 

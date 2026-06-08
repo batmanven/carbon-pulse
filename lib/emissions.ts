@@ -1,9 +1,7 @@
-type FactorEntry = { value: number; unit: string; description: string };
-type EmissionFactors = {
-  [C: string]: { [S: string]: FactorEntry };
-};
+export type FactorEntry = { value: number; unit: string; description: string };
+export type EmissionFactorMap = Record<string, Record<string, FactorEntry>>;
 
-export const EMISSION_FACTORS = {
+export const EMISSION_FACTORS: EmissionFactorMap = {
   transport: {
     car: { value: 0.17, unit: "km", description: "Average gasoline car" },
     flight: { value: 0.255, unit: "km", description: "Short-haul flight" },
@@ -35,9 +33,7 @@ export const EMISSION_FACTORS = {
     tshirt: { value: 5, unit: "item", description: "Cotton t-shirt" },
     jeans: { value: 20, unit: "item", description: "Denim jeans" },
   },
-} satisfies EmissionFactors;
-
-
+};
 
 // Grid carbon intensity by region (kg CO₂e per kWh)
 // Compared to the default global average of 0.40
@@ -61,36 +57,18 @@ export const REGION_GRID_FACTORS: Record<string, { label: string; factor: number
 
 export const DEFAULT_REGION = "global";
 
-/**
- * Retrieves the emissions modifier factor based on regional grid composition.
- *
- * @param {string} region - The region key identifier.
- * @returns {number} The numeric multiplier modifier for emissions.
- */
 export function getRegionFactor(region: string): number {
   return REGION_GRID_FACTORS[region]?.factor ?? 1.0;
 }
 
-type EmissionFactorMap = Record<string, Record<string, { value: number; unit: string }>>;
 
-/**
- * Calculates absolute emissions in kg CO2e based on unit activity volume,
- * category parameters, and regional grid context offsets.
- *
- * @param {string} category - The top-level carbon emission category.
- * @param {string} subCategory - The specific sub-category.
- * @param {number} amount - The numeric volume of activity.
- * @param {string} [region] - Optional regional identifier.
- * @returns {number} The calculated emissions value in kg CO2e.
- */
 export function calculateEmissions(
   category: string,
   subCategory: string,
   amount: number,
   region?: string,
 ): number {
-  const factors = EMISSION_FACTORS as unknown as EmissionFactorMap;
-  const factor = factors[category]?.[subCategory]?.value;
+  const factor = EMISSION_FACTORS[category]?.[subCategory]?.value;
   if (factor === undefined) return 0;
 
   let adjusted = factor * amount;
@@ -102,12 +80,6 @@ export function calculateEmissions(
   return adjusted;
 }
 
-/**
- * Resolves the user-friendly label matching a region key.
- *
- * @param {string} region - The region identifier key.
- * @returns {string} The descriptive region label name.
- */
 export function getRegionLabel(region: string): string {
   return REGION_GRID_FACTORS[region]?.label ?? "Global Average";
 }

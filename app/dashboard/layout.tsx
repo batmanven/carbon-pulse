@@ -4,10 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, List, BarChart2, Settings, Menu, X } from "lucide-react";
 
-/**
- * Layout wrapper for the CarbonKeeper dashboard routes, rendering the navigation sidebar
- * and managing responsive mobile navigation slide-over menus.
- */
 export default function DashboardLayout({
   children,
 }: {
@@ -28,7 +24,7 @@ export default function DashboardLayout({
         <div
           className="fixed inset-0 bg-black/20 z-40 md:hidden"
           onClick={() => setIsMobileOpen(false)}
-          onKeyDown={(e) => { if (e.key === "Escape" || e.key === " ") setIsMobileOpen(false); }}
+          onKeyDown={(e) => { if (e.key === "Escape") setIsMobileOpen(false); }}
           role="presentation"
           tabIndex={-1}
         />

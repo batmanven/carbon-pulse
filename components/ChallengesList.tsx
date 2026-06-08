@@ -7,9 +7,6 @@ interface Props {
   onToggle: (id: string) => void;
 }
 
-/**
- * ChallengesList component displaying interactive gamified carbon saving tasks.
- */
 export function ChallengesList({ challenges, onToggle }: Props) {
   return (
     <div className="grid gap-3">

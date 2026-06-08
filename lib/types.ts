@@ -1,6 +1,3 @@
-/**
- * Represents a single carbon activity log entry.
- */
 export interface Activity {
   id: string;
   timestamp: string;
@@ -13,9 +10,6 @@ export interface Activity {
   rawInput?: string;
 }
 
-/**
- * Represents a personalized carbon reduction recommendation.
- */
 export interface Recommendation {
   id: string;
   title: string;
@@ -24,9 +18,6 @@ export interface Recommendation {
   difficulty: "Easy" | "Medium" | "Hard";
 }
 
-/**
- * Represents a gamified green-action habit building challenge.
- */
 export interface Challenge {
   id: string;
   title: string;

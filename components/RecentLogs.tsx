@@ -8,11 +8,6 @@ interface Props {
   activities: Activity[];
 }
 
-/**
- * RecentLogs component rendering the list of recent carbon activities logged.
- *
- * @param {Props} props - Component property arguments.
- */
 export function RecentLogs({ activities }: Props) {
   if (activities.length === 0) return null;
 

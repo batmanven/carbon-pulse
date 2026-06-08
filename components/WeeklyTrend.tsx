@@ -13,12 +13,6 @@ interface Props {
   weeklyTrend: { date: string; value: number }[];
 }
 
-/**
- * WeeklyTrend component rendering a 7-day carbon emissions bar chart.
- * Uses dynamic imports of recharts to resolve SSR mismatch risks.
- *
- * @param {Props} props - The component properties.
- */
 export function WeeklyTrend({ weeklyTrend }: Props) {
   if (weeklyTrend.length === 0) return null;
 

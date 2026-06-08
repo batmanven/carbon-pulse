@@ -6,10 +6,6 @@ import { Terminal, Send } from "lucide-react";
 import { toast } from "sonner";
 import { calculateActivityEmissions } from "@/lib/agents/calculator";
 
-/**
- * ActivityLog component rendering the command-palette input bar
- * that supports natural language parsing to track actions.
- */
 export function ActivityLog() {
   const [input, setInput] = useState("");
   const {

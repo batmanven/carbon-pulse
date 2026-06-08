@@ -2,61 +2,12 @@ import { create } from "zustand";
 import { Activity, Recommendation, Challenge } from "@/lib/types";
 import { toast } from "sonner";
 import { startOfDay, subDays, format } from "date-fns";
-import { DEFAULT_REGION } from "@/lib/emissions";
-
-const PERSIST_KEY = "CARBON_ACTIVITIES";
-
-/**
- * Retrieves the user's preferred region configuration from local storage.
- * Defaults to global average if not present or during server-side rendering.
- *
- * @returns {string} The active region identifier.
- */
-function getStoredRegion(): string {
-  if (typeof window === "undefined") return DEFAULT_REGION;
-  return localStorage.getItem("CARBON_REGION") || DEFAULT_REGION;
-}
-
-/**
- * Retrieves the cached activity log array from local storage.
- * Returns an empty array if empty, corrupted, or during server-side rendering.
- *
- * @returns {Activity[]} List of saved user carbon activities.
- */
-function getStoredActivities(): Activity[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = localStorage.getItem(PERSIST_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-/**
- * Persists the activity log array to local storage.
- * Does nothing during server-side rendering.
- *
- * @param {Activity[]} activities - The array of activities to serialize.
- */
-function persistActivities(activities: Activity[]) {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(PERSIST_KEY, JSON.stringify(activities));
-}
-
-/**
- * Reads the daily carbon allowance budget from local storage.
- * Falls back to the default daily budget of 10kg if not set or invalid.
- *
- * @returns {number} The daily carbon limit in kg CO2e.
- */
-function readBudget(): number {
-  if (typeof window === "undefined") return DEFAULT_BUDGET;
-  const raw = localStorage.getItem("CARBON_BUDGET");
-  if (!raw) return DEFAULT_BUDGET;
-  const val = parseFloat(raw);
-  return isNaN(val) || val <= 0 ? DEFAULT_BUDGET : val;
-}
+import {
+  getStoredRegion,
+  getStoredActivities,
+  persistActivities,
+  readBudget,
+} from "@/lib/storage";
 
 interface AppState {
   activities: Activity[];
@@ -81,12 +32,6 @@ interface AppState {
   getDailyBudget: () => number;
 }
 
-/**
- * Computes weekly emission trends by bucketing emissions by weekday (EEE).
- *
- * @param {Activity[]} activities - User logged carbon activities.
- * @returns {{ date: string; value: number }[]} Data array representing emission trends per day.
- */
 function computeWeeklyTrend(activities: Activity[]) {
   const today = startOfDay(new Date());
   const buckets: Record<string, number> = {};
@@ -105,12 +50,6 @@ function computeWeeklyTrend(activities: Activity[]) {
   return Object.entries(buckets).map(([date, value]) => ({ date, value }));
 }
 
-/**
- * Computes today's total carbon emissions footprint in kg CO2e.
- *
- * @param {Activity[]} activities - User logged carbon activities.
- * @returns {number} The total emissions generated today.
- */
 function computeDailyFootprint(activities: Activity[]) {
   const today = startOfDay(new Date());
   return activities
@@ -148,15 +87,9 @@ const DEFAULT_CHALLENGES: Challenge[] = [
 ];
 
 const preloadedActivities = getStoredActivities();
-const DEFAULT_BUDGET = 10;
 
 const preloadedBudget = readBudget();
 
-/**
- * React hook store that maintains the global application state,
- * including activity logs, daily targets, regional parameters,
- * and dynamic insights.
- */
 export const useStore = create<AppState>((set, get) => ({
   activities: preloadedActivities,
   dailyFootprint: computeDailyFootprint(preloadedActivities),

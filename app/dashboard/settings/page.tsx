@@ -1,29 +1,19 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 import { Settings2, Database, Globe } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { useStore } from "@/lib/store";
-import { REGION_GRID_FACTORS, DEFAULT_REGION } from "@/lib/emissions";
+import { REGION_GRID_FACTORS } from "@/lib/emissions";
 import type { JSX } from "react";
 
-/**
- * Settings Page component allowing configuration of daily carbon limits
- * and regional grid offsets to personalize calculation methodologies.
- */
 export default function SettingsPage(): JSX.Element {
   const dailyBudget = useStore((s) => s.dailyBudget);
   const region = useStore((s) => s.region);
   const setDailyBudget = useStore((s) => s.setDailyBudget);
   const setRegion = useStore((s) => s.setRegion);
 
-  const [budget, setBudget] = useState("10");
-  const [regionLocal, setRegionLocal] = useState(DEFAULT_REGION);
-
-  useEffect(() => {
-    setBudget(dailyBudget.toString());
-    setRegionLocal(region);
-  }, [dailyBudget, region]);
+  const [budget, setBudget] = useState(dailyBudget.toString());
+  const [regionLocal, setRegionLocal] = useState(region);
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();

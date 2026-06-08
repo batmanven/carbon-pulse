@@ -17,25 +17,12 @@ const KEYWORD_MAP: [RegExp, string, string][] = [
   [/jeans|denim|pant/i, "shopping", "jeans"],
 ];
 
-/**
- * Helper to match and extract numeric amount values from natural language query strings.
- *
- * @param {string} input - User raw text query.
- * @returns {number | null} Extracted amount float, or null if match fails.
- */
 function extractAmount(input: string): number | null {
   const match = input.match(/(\d+[,.]?\d*)\s*(km|kms|kg|kgs|kwh|item|items|hr|hrs|hour|hours)?/i);
   if (match) return parseFloat(match[1].replace(",", ""));
   return null;
 }
 
-/**
- * Robust deterministic pattern fallback analyzer that maps common query terms
- * into standard category entity parameters in case AI APIs are unreachable.
- *
- * @param {string} input - User raw text activity log.
- * @returns {{ category: string; subCategory: string; amount: number }} Resolved parameters.
- */
 export function parseFallback(input: string): { category: string; subCategory: string; amount: number } {
   const amount = extractAmount(input) || 1;
 

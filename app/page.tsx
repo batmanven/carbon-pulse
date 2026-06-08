@@ -1,10 +1,6 @@
 import Link from "next/link";
 import { Target, Zap, TrendingDown, BarChart3 } from "lucide-react";
 
-/**
- * Landing homepage component introducing the CarbonKeeper carbon coach platform,
- * establishing the value proposition and outlining the 4 primary carbon tracking pillars.
- */
 export default function Home() {
   return (
     <main className="min-h-screen bg-canvas text-body font-sans selection:bg-brand-pink selection:text-white flex flex-col">

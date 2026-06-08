@@ -10,10 +10,6 @@ export const metadata = {
   description: "AI-powered personal carbon coach. Log activities naturally, get instant CO₂ calculations, personalized reduction plans, and track your impact over time.",
 };
 
-/**
- * Root Layout element wrapping the entire CarbonKeeper Next.js application shell,
- * establishing global error boundaries, font classes, and context toasts.
- */
 export default function RootLayout({
   children,
 }: {

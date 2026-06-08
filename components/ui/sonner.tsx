@@ -13,8 +13,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
         },
       }}
       {...props}
-
-      
     />
   )
 }

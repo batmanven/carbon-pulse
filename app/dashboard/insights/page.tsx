@@ -3,10 +3,6 @@ import { PieChart } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { motion } from "framer-motion";
 
-/**
- * Insights Page component rendering the personalized AI insight text,
- * daily budget utilization meter, and high-leverage recommendations.
- */
 export default function InsightsPage() {
   const {
     recommendations,

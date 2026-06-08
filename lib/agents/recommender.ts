@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+import { getAIClient, generateContentSafe } from "@/lib/agents/client";
 import { Activity, Recommendation } from "@/lib/types";
 import { getRegionLabel } from "@/lib/emissions";
 import { z } from "zod";
@@ -6,39 +6,7 @@ import { recommendationSchema } from "@/lib/schema";
 
 const recommendationArraySchema = z.array(recommendationSchema);
 
-/**
- * Safely calls Gemini to generate content, wrapping network exceptions.
- *
- * @param {GoogleGenAI} ai - The GoogleGenAI SDK instance.
- * @param {string} prompt - The payload prompt structure.
- * @returns {Promise<string | null>} The response content or null.
- */
-async function generateContentSafe(
-  ai: GoogleGenAI,
-  prompt: string,
-): Promise<string | null> {
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-flash-latest",
-      contents: prompt,
-      config: {
-        responseMimeType: "application/json",
-      },
-    });
-    return response.text || null;
-  } catch {
-    return null;
-  }
-}
 
-/**
- * Queries Gemini Flash to analyze historical activities and suggest exactly 3 personalized swaps.
- *
- * @param {Activity[]} activities - The array of logged activities.
- * @param {string} [apiKeyOverride] - Optional API key override.
- * @param {string} [region] - Optional user region.
- * @returns {Promise<Recommendation[]>} Array of personalized carbon reduction swaps.
- */
 export async function getRecommendations(
   activities: Activity[],
   apiKeyOverride?: string,
@@ -46,9 +14,7 @@ export async function getRecommendations(
 ): Promise<Recommendation[]> {
   if (activities.length === 0) return [];
 
-  const ai = new GoogleGenAI({
-    apiKey: apiKeyOverride || process.env.GEMINI_API_KEY,
-  });
+  const ai = getAIClient(apiKeyOverride);
 
   const recentActivities = activities.slice(-30);
   const activitiesContext = recentActivities

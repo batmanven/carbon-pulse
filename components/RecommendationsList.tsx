@@ -6,10 +6,6 @@ interface Props {
   recommendations: Recommendation[];
 }
 
-/**
- * RecommendationsList component displaying AI-generated custom swaps
- * focused on reducing carbon footprints.
- */
 export function RecommendationsList({ recommendations }: Props) {
   return (
     <div className="grid gap-4" aria-live="polite">
