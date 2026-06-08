@@ -157,7 +157,7 @@ const preloadedBudget = readBudget();
  * including activity logs, daily targets, regional parameters,
  * and dynamic insights.
  */
-export const useStore = create<AppState>((set) => ({
+export const useStore = create<AppState>((set, get) => ({
   activities: preloadedActivities,
   dailyFootprint: computeDailyFootprint(preloadedActivities),
   budgetUsed: Math.min(
@@ -242,6 +242,6 @@ export const useStore = create<AppState>((set) => ({
   },
 
   getDailyBudget: () => {
-    return readBudget();
+    return get().dailyBudget;
   },
 }));

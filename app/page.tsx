@@ -113,7 +113,7 @@ export default function Home() {
 
       <footer className="w-full border-t border-hairline py-8 px-6 text-center">
         <p className="text-sm text-muted font-medium">
-          &copy; 2026 CarbonKeeper. Built for individuals, not corporations.
+          &copy; {new Date().getFullYear()} CarbonKeeper. Built for individuals, not corporations.
         </p>
       </footer>
     </main>

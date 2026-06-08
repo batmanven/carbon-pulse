@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { parseNaturalLanguage } from "../../../lib/agents/orchestrator";
-import { parseInputSchema } from "../../../lib/schema";
+import { parseNaturalLanguage } from "@/lib/agents/orchestrator";
+import { parseInputSchema } from "@/lib/schema";
 import { z } from "zod";
-import { parseFallback } from "../../../lib/agents/fallback-parser";
+import { parseFallback } from "@/lib/agents/fallback-parser";
 
 export async function POST(req: Request) {
   try {

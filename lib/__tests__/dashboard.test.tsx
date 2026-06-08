@@ -83,7 +83,7 @@ function renderDashboard() {
 describe("Dashboard", () => {
   it("renders the header", () => {
     renderDashboard();
-    expect(screen.getByText("CarbonKeeper: Carbon Footprint Coach")).toBeInTheDocument();
+    expect(screen.getByText("Track, Understand, and Reduce Your Carbon Footprint")).toBeInTheDocument();
   });
 
   it("shows empty state when no activities", () => {

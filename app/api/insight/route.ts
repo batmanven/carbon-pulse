@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { generateInsight } from "../../../lib/agents/insights";
-import { insightSchema } from "../../../lib/schema";
+import { generateInsight } from "@/lib/agents/insights";
+import { insightSchema } from "@/lib/schema";
 import { z } from "zod";
 import { aiCache } from "../../../lib/cache";
 

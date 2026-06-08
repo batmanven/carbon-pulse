@@ -1,6 +1,6 @@
 {
   "name": "carbonkeeper",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -13,8 +13,6 @@
   },
   "dependencies": {
     "@google/genai": "^2.8.0",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
     "framer-motion": "^12.40.0",
     "lucide-react": "^1.17.0",
@@ -23,7 +21,6 @@
     "react-dom": "19.2.4",
     "recharts": "^3.8.0",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.6.0",
     "zod": "^4.4.3",
     "zustand": "^5.0.14"
   },

@@ -30,8 +30,8 @@ export default function Dashboard() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
       <header className="mb-12" aria-live="polite">
-        <h1 className="text-[40px] font-medium text-ink tracking-[-1.0px] mb-2">CarbonKeeper: Carbon Footprint Coach</h1>
-        <p className="text-muted font-medium">Track, understand, and reduce your personal carbon footprint today.</p>
+        <h1 className="text-[40px] font-medium text-ink tracking-[-1.0px] mb-2">Track, Understand, and Reduce Your Carbon Footprint</h1>
+        <p className="text-muted font-medium">Your personal carbon coach. Log activities, track progress, and discover personalized ways to reduce your impact.</p>
       </header>
 
       <div className="mb-12">
