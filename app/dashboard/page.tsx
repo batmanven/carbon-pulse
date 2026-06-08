@@ -1,20 +1,20 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useStore } from "../../lib/store";
 import { ActivityLog } from "../../components/ActivityLog";
 import { Leaf, Zap, Map, Database, Target, TrendingDown } from "lucide-react";
 import { motion } from "framer-motion";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-} from "recharts";
+import dynamic from "next/dynamic";
+
+const PieChart = dynamic(() => import("recharts").then((m) => m.PieChart), { ssr: false });
+const Pie = dynamic(() => import("recharts").then((m) => m.Pie), { ssr: false });
+const Cell = dynamic(() => import("recharts").then((m) => m.Cell), { ssr: false });
+const Tooltip = dynamic(() => import("recharts").then((m) => m.Tooltip), { ssr: false });
+const ResponsiveContainer = dynamic(() => import("recharts").then((m) => m.ResponsiveContainer), { ssr: false });
+const BarChart = dynamic(() => import("recharts").then((m) => m.BarChart), { ssr: false });
+const Bar = dynamic(() => import("recharts").then((m) => m.Bar), { ssr: false });
+const XAxis = dynamic(() => import("recharts").then((m) => m.XAxis), { ssr: false });
+const YAxis = dynamic(() => import("recharts").then((m) => m.YAxis), { ssr: false });
 
 const COLORS: Record<string, string> = {
   transport: "#14b8a6",
@@ -28,6 +28,7 @@ export default function Dashboard() {
     activities,
     dailyFootprint,
     budgetUsed,
+    dailyBudget,
     weeklyTrend,
     recommendations,
     challenges,
@@ -42,21 +43,24 @@ export default function Dashboard() {
     return () => clearTimeout(timer);
   }, []);
 
-  const chartData = activities.reduce(
-    (acc, curr) => {
-      const existing = acc.find((item) => item.name === curr.category);
-      if (existing) {
-        existing.value += curr.co2e;
-      } else {
-        acc.push({ name: curr.category, value: curr.co2e });
-      }
-      return acc;
-    },
-    [] as { name: string; value: number }[],
+  const chartData = useMemo(
+    () =>
+      activities.reduce(
+        (acc, curr) => {
+          const existing = acc.find((item) => item.name === curr.category);
+          if (existing) {
+            existing.value += curr.co2e;
+          } else {
+            acc.push({ name: curr.category, value: curr.co2e });
+          }
+          return acc;
+        },
+        [] as { name: string; value: number }[],
+      ),
+    [activities],
   );
 
-  const dailyBudget = typeof window !== "undefined" ? parseFloat(localStorage.getItem("CARBON_BUDGET") || "10") : 10;
-  const remaining = Math.max(dailyBudget - dailyFootprint, 0);
+  const remaining = useMemo(() => Math.max(dailyBudget - dailyFootprint, 0), [dailyBudget, dailyFootprint]);
 
   if (!mounted) return null;
 
@@ -148,8 +152,7 @@ export default function Dashboard() {
                       ))}
                     </Pie>
                     <Tooltip
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      formatter={(value: any) => [
+                      formatter={(value: unknown) => [
                         `${Number(value).toFixed(2)} kg`,
                         "Emissions",
                       ]}

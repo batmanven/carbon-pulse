@@ -1,24 +1,24 @@
-# Carbon Pulse — PromptWars Challenge 3
+# MYCELIUM — PromptWars Challenge 3
 
 > AI-powered personal carbon coach. Log your activities naturally, get instant CO₂ calculations, personalized swaps, and gamified challenges — all powered by Google Antigravity + Gemini 3.5 Flash.
 
-**Problem Statement**: *Design a solution that helps individuals understand, track, and reduce their carbon footprint through simple actions and personalized insights.*
+**Problem Statement**: _Design a solution that helps individuals understand, track, and reduce their carbon footprint through simple actions and personalized insights._
 
 ---
 
 ## ✨ Features
 
-| Feature | Description |
-|---|---|
-| **Natural Language Logging** | Type "I drove 12km" or "I ate a beef burger" — AI parses it automatically |
-| **Instant CO₂ Calculation** | Deterministic emission factors with relatable equivalents ("= 255 smartphone charges") |
-| **AI Recommendations** | Gemini analyzes your habits and suggests 3 personalized swaps ranked by impact |
-| **Weekly Trends** | Bar chart showing your 7-day carbon footprint trajectory |
-| **Category Breakdown** | Donut chart visualizing emissions by category (transport, food, energy, shopping) |
-| **Daily Budget Meter** | Visual gauge showing % of daily carbon budget used |
-| **Gamified Challenges** | Meatless Monday, Bike to Work Wednesday — track streaks and build habits |
-| **AI Insights** | Personalized "aha" moment generated after each log |
-| **Settings** | Configurable daily budget and Gemini API key override |
+| Feature                      | Description                                                                            |
+| ---------------------------- | -------------------------------------------------------------------------------------- |
+| **Natural Language Logging** | Type "I drove 12km" or "I ate a beef burger" — AI parses it automatically              |
+| **Instant CO₂ Calculation**  | Deterministic emission factors with relatable equivalents ("= 255 smartphone charges") |
+| **AI Recommendations**       | Gemini analyzes your habits and suggests 3 personalized swaps ranked by impact         |
+| **Weekly Trends**            | Bar chart showing your 7-day carbon footprint trajectory                               |
+| **Category Breakdown**       | Donut chart visualizing emissions by category (transport, food, energy, shopping)      |
+| **Daily Budget Meter**       | Visual gauge showing % of daily carbon budget used                                     |
+| **Gamified Challenges**      | Meatless Monday, Bike to Work Wednesday — track streaks and build habits               |
+| **AI Insights**              | Personalized "aha" moment generated after each log                                     |
+| **Settings**                 | Configurable daily budget and Gemini API key override                                  |
 
 ---
 
@@ -97,38 +97,38 @@ npm run lint    # ESLint check
 npm run test
 ```
 
-| Test Suite | Tests | What It Covers |
-|---|---|---|
-| `emissions.test.ts` | 14 | All categories, subcategories, edge cases (zero/negative/unknown) |
-| `validation.test.ts` | 16 | Zod schemas: valid inputs, empty, missing, type mismatches |
-| `store.test.ts` | 8 | State management: add, append, clear, budget, challenges, recommendations |
-| `equivalents.test.ts` | 6 | CO₂ equivalents across thresholds, edge cases |
-| `ActivityLog.test.tsx` | 3 | Component rendering: input, button, header |
+| Test Suite             | Tests | What It Covers                                                            |
+| ---------------------- | ----- | ------------------------------------------------------------------------- |
+| `emissions.test.ts`    | 14    | All categories, subcategories, edge cases (zero/negative/unknown)         |
+| `validation.test.ts`   | 16    | Zod schemas: valid inputs, empty, missing, type mismatches                |
+| `store.test.ts`        | 8     | State management: add, append, clear, budget, challenges, recommendations |
+| `equivalents.test.ts`  | 6     | CO₂ equivalents across thresholds, edge cases                             |
+| `ActivityLog.test.tsx` | 3     | Component rendering: input, button, header                                |
 
 ---
 
 ## 📊 Evaluation Criteria Mapping
 
-| Criteria | How We Address It |
-|---|---|
-| **Code Quality** | Strict TypeScript, modular architecture (agents/UI/lib separation), DRY, clean Zod validation |
-| **Security** | All AI calls server-side via Next.js API routes, Zod input validation on every endpoint, `.env` gitignored |
-| **Efficiency** | Pre-bundled emission factors (no API latency), low-token agent prompts, lightweight Zustand state, Framer Motion animations |
-| **Testing** | 25+ tests across 5 suites covering emissions, validation, store, equivalents, and component rendering |
+| Criteria          | How We Address It                                                                                                                                |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Code Quality**  | Strict TypeScript, modular architecture (agents/UI/lib separation), DRY, clean Zod validation                                                    |
+| **Security**      | All AI calls server-side via Next.js API routes, Zod input validation on every endpoint, `.env` gitignored                                       |
+| **Efficiency**    | Pre-bundled emission factors (no API latency), low-token agent prompts, lightweight Zustand state, Framer Motion animations                      |
+| **Testing**       | 25+ tests across 5 suites covering emissions, validation, store, equivalents, and component rendering                                            |
 | **Accessibility** | Semantic HTML, `aria-labels`, `aria-live` regions for dynamic content, skip-to-content link, keyboard-navigable, `role="meter"` for budget gauge |
 
 ---
 
 ## 🔑 PS Alignment
 
-| PS Keyword | Delivery |
-|---|---|
-| **individuals** | Single-user, zero-friction, no org setup required |
-| **understand** | Relatable CO₂ equivalents, category breakdown, weekly trends |
-| **track** | Daily footprint meter, 7-day bar chart, budget percentage, running log |
-| **reduce** | AI recommendations, gamified challenges with streak tracking |
-| **simple actions** | 5-second natural language input — type "I drove 12km" |
-| **personalized insights** | Gemini-generated insights based on your actual activity history |
+| PS Keyword                | Delivery                                                               |
+| ------------------------- | ---------------------------------------------------------------------- |
+| **individuals**           | Single-user, zero-friction, no org setup required                      |
+| **understand**            | Relatable CO₂ equivalents, category breakdown, weekly trends           |
+| **track**                 | Daily footprint meter, 7-day bar chart, budget percentage, running log |
+| **reduce**                | AI recommendations, gamified challenges with streak tracking           |
+| **simple actions**        | 5-second natural language input — type "I drove 12km"                  |
+| **personalized insights** | Gemini-generated insights based on your actual activity history        |
 
 ---
 

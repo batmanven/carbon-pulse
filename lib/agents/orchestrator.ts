@@ -1,9 +1,15 @@
 import { GoogleGenAI } from "@google/genai";
 
+export interface ParseResult {
+  category?: string;
+  subCategory?: string;
+  amount?: number;
+}
+
 export async function parseNaturalLanguage(
   input: string,
   apiKeyOverride?: string,
-) {
+): Promise<ParseResult> {
   const ai = new GoogleGenAI({
     apiKey: apiKeyOverride || process.env.GEMINI_API_KEY,
   });
@@ -38,7 +44,12 @@ Input: "${input}"
     config: { responseMimeType: "application/json" },
   });
   try {
-    return JSON.parse(response.text || "{}");
+    const parsed = JSON.parse(response.text || "{}");
+    return {
+      category: typeof parsed.category === "string" ? parsed.category : undefined,
+      subCategory: typeof parsed.subCategory === "string" ? parsed.subCategory : undefined,
+      amount: typeof parsed.amount === "number" ? parsed.amount : undefined,
+    };
   } catch {
     return {};
   }

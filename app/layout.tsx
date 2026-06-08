@@ -6,7 +6,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Carbon Pulse",
+  title: "MYCELIUM",
   description: "AI-powered personal carbon coach.",
 };
 

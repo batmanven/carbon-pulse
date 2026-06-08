@@ -8,10 +8,15 @@ export default function Home() {
         <header className="flex flex-col md:flex-row items-center justify-between gap-12">
           <div className="md:w-7/12 text-center md:text-left">
             <h1 className="text-[56px] md:text-[80px] font-medium text-ink tracking-[-2.5px] leading-none mb-6">
-              Track your life&apos;s footprint<br />in 5 seconds.
+              Track your life&apos;s footprint
+              <br />
+              in 5 seconds.
             </h1>
             <p className="text-[18px] md:text-[20px] text-muted max-w-xl leading-relaxed mb-10 font-medium mx-auto md:mx-0">
-              A playful, lightning-fast tracker for individuals who care about the planet. Type what you did naturally, let our AI instantly calculate your CO₂ impact, and discover effortless lifestyle swaps.
+              A playful, lightning-fast tracker for individuals who care about
+              the planet. Type what you did naturally, let our AI instantly
+              calculate your CO₂ impact, and discover effortless lifestyle
+              swaps.
             </p>
             <div className="flex items-center justify-center md:justify-start gap-4">
               <Link
@@ -46,19 +51,25 @@ export default function Home() {
               <div className="w-16 h-16 bg-brand-lavender text-ink flex items-center justify-center rounded-2xl mx-auto mb-6">
                 <Target className="w-8 h-8" />
               </div>
-              <h3 className="text-[20px] font-semibold text-ink mb-3">1. Tell us what you did</h3>
+              <h3 className="text-[20px] font-semibold text-ink mb-3">
+                1. Tell us what you did
+              </h3>
               <p className="text-muted font-medium text-[15px] leading-relaxed">
-                Just type &quot;I ate a beef burger&quot; or &quot;I drove 20km&quot;. No forms, no complex menus.
+                Just type &quot;I ate a beef burger&quot; or &quot;I drove
+                20km&quot;. No forms, no complex menus.
               </p>
             </div>
-            
+
             <div className="bg-canvas border border-hairline p-8 rounded-[24px] shadow-sm text-center">
               <div className="w-16 h-16 bg-brand-teal text-white flex items-center justify-center rounded-2xl mx-auto mb-6">
                 <Zap className="w-8 h-8" />
               </div>
-              <h3 className="text-[20px] font-semibold text-ink mb-3">2. AI Calculates the impact</h3>
+              <h3 className="text-[20px] font-semibold text-ink mb-3">
+                2. AI Calculates the impact
+              </h3>
               <p className="text-muted font-medium text-[15px] leading-relaxed">
-                Gemini processes the natural language instantly, matching it to deterministic scientific emission factors.
+                Gemini processes the natural language instantly, matching it to
+                deterministic scientific emission factors.
               </p>
             </div>
 
@@ -66,9 +77,12 @@ export default function Home() {
               <div className="w-16 h-16 bg-brand-peach text-ink flex items-center justify-center rounded-2xl mx-auto mb-6">
                 <RefreshCw className="w-8 h-8" />
               </div>
-              <h3 className="text-[20px] font-semibold text-ink mb-3">3. Discover effortless swaps</h3>
+              <h3 className="text-[20px] font-semibold text-ink mb-3">
+                3. Discover effortless swaps
+              </h3>
               <p className="text-muted font-medium text-[15px] leading-relaxed">
-                Based on your actual habits, the AI recommends highly personalized, easy lifestyle changes to lower your impact.
+                Based on your actual habits, the AI recommends highly
+                personalized, easy lifestyle changes to lower your impact.
               </p>
             </div>
           </div>
@@ -82,7 +96,8 @@ export default function Home() {
               Ready to take action?
             </h2>
             <p className="text-[18px] text-white/80 max-w-xl mx-auto font-medium mb-10">
-              Join a movement of conscious individuals building a greener future, one simple choice at a time.
+              Join a movement of conscious individuals building a greener
+              future, one simple choice at a time.
             </p>
             <Link
               href="/dashboard"
@@ -96,7 +111,9 @@ export default function Home() {
       </section>
 
       <footer className="w-full border-t border-hairline py-8 px-6 text-center">
-        <p className="text-sm text-muted font-medium">© 2026 Carbon Pulse. Built for individuals, not corporations.</p>
+        <p className="text-sm text-muted font-medium">
+          © 2026 MYCELIUM. Built for individuals, not corporations.
+        </p>
       </footer>
     </main>
   );

@@ -35,10 +35,7 @@ export default function DashboardLayout({
             href="/"
             className="text-[20px] font-semibold text-ink tracking-tight flex items-center gap-2"
           >
-            <span className="w-8 h-8 rounded-full bg-brand-pink flex items-center justify-center text-white text-sm font-bold">
-              C
-            </span>
-            Carbon Pulse
+            MYCELIUM
           </Link>
           <button
             className="md:hidden text-ink"
@@ -90,12 +87,13 @@ export default function DashboardLayout({
             href="/"
             className="text-[18px] font-semibold text-ink tracking-tight flex items-center gap-2"
           >
-            <span className="w-6 h-6 rounded-full bg-brand-pink flex items-center justify-center text-white text-xs font-bold">
-              C
-            </span>
-            Carbon Pulse
+            MYCELIUM
           </Link>
-          <button className="text-ink" onClick={() => setIsMobileOpen(true)} aria-label="Open menu">
+          <button
+            className="text-ink"
+            onClick={() => setIsMobileOpen(true)}
+            aria-label="Open menu"
+          >
             <Menu className="w-6 h-6" />
           </button>
         </header>

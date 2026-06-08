@@ -1,27 +1,27 @@
-# Carbon Pulse — AI Evaluation-Optimized MVP
+# MYCELIUM — AI Evaluation-Optimized MVP
 
-This implementation plan is built exclusively to maximize the score across the 5 AI Judge Evaluation Criteria *while answering every word of the problem statement*. Every feature maps directly to: *"help individuals understand, track, and reduce their carbon footprint through simple actions and personalized insights."*
+This implementation plan is built exclusively to maximize the score across the 5 AI Judge Evaluation Criteria _while answering every word of the problem statement_. Every feature maps directly to: _"help individuals understand, track, and reduce their carbon footprint through simple actions and personalized insights."_
 
 ## Problem Statement Alignment Map
 
-| PS Keyword | How We Deliver It |
-| :--- | :--- |
-| **individuals** | Single-user experience. No enterprise auth, no orgs. Zero friction entry. |
-| **understand** | Every activity logged shows its CO₂e in relatable terms ("= 2 smartphones charged"). Educational tooltips on what drives emissions. |
-| **track** | Per-day footprint meter, 7-day trend line, category breakdown donut. "Last week vs this week" comparison. |
-| **reduce** | Micro-challenges (Meatless Monday, Bike to Work), streak system, saved CO₂ counter with tree-planting equivalence. |
-| **simple actions** | Log an activity in 5 seconds: pick category → enter value. OR type natural language: *"I drove 12km today"*. |
-| **personalized insights** | AI Recommender Agent analyzes *your* logged activities and suggests 3 specific swaps ranked by YOUR potential savings. |
+| PS Keyword                | How We Deliver It                                                                                                                   |
+| :------------------------ | :---------------------------------------------------------------------------------------------------------------------------------- |
+| **individuals**           | Single-user experience. No enterprise auth, no orgs. Zero friction entry.                                                           |
+| **understand**            | Every activity logged shows its CO₂e in relatable terms ("= 2 smartphones charged"). Educational tooltips on what drives emissions. |
+| **track**                 | Per-day footprint meter, 7-day trend line, category breakdown donut. "Last week vs this week" comparison.                           |
+| **reduce**                | Micro-challenges (Meatless Monday, Bike to Work), streak system, saved CO₂ counter with tree-planting equivalence.                  |
+| **simple actions**        | Log an activity in 5 seconds: pick category → enter value. OR type natural language: _"I drove 12km today"_.                        |
+| **personalized insights** | AI Recommender Agent analyzes _your_ logged activities and suggests 3 specific swaps ranked by YOUR potential savings.              |
 
 ## AI Evaluation Strategy Matrix
 
-| Parameter | Our Implementation Strategy |
-| :--- | :--- |
-| **Code Quality** | Strict TypeScript (`"strict": true`), modular architecture (UI in `components/`, agent logic in `lib/agents/`, types in `lib/types/`), DRY, zero ESLint warnings, meaningful JSDoc on all public functions. |
-| **Security** | All Antigravity SDK calls happen server-side in Next.js API routes (`app/api/`). Strict `zod` validation on all user input (activity values, dates, categories). No API keys ever reach the client bundle. |
-| **Efficiency** | Low-token subagent prompts (under 200 tokens each). Pre-bundled emission factors JSON (no external API latency). Framer Motion instead of D3 for lightweight animations. |
-| **Testing** | Jest + React Testing Library suite covering: emission factor calculations, Zod validation schemas, agent prompt output parsing, and UI component rendering. `__tests__/` folder visible to the judge. |
-| **Accessibility** | 100% semantic HTML (`<main>`, `<nav>`, `<section>`, `<article>`), WCAG AA contrast ratios, full keyboard navigation on all inputs, `aria-labels` on every interactive element, focus trapping on modals. |
+| Parameter         | Our Implementation Strategy                                                                                                                                                                                 |
+| :---------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Code Quality**  | Strict TypeScript (`"strict": true`), modular architecture (UI in `components/`, agent logic in `lib/agents/`, types in `lib/types/`), DRY, zero ESLint warnings, meaningful JSDoc on all public functions. |
+| **Security**      | All Antigravity SDK calls happen server-side in Next.js API routes (`app/api/`). Strict `zod` validation on all user input (activity values, dates, categories). No API keys ever reach the client bundle.  |
+| **Efficiency**    | Low-token subagent prompts (under 200 tokens each). Pre-bundled emission factors JSON (no external API latency). Framer Motion instead of D3 for lightweight animations.                                    |
+| **Testing**       | Jest + React Testing Library suite covering: emission factor calculations, Zod validation schemas, agent prompt output parsing, and UI component rendering. `__tests__/` folder visible to the judge.       |
+| **Accessibility** | 100% semantic HTML (`<main>`, `<nav>`, `<section>`, `<article>`), WCAG AA contrast ratios, full keyboard navigation on all inputs, `aria-labels` on every interactive element, focus trapping on modals.    |
 
 ## Architecture & Scope
 
@@ -123,9 +123,11 @@ store: {
 ## Verification Plan
 
 ### Automated Tests
+
 - `npm run test` — Jest suite covers emissions calc, Zod validation, prompt output parsing.
 
 ### Manual Checks
+
 1. `npm run dev` → dashboard loads with sample data.
 2. Log activity via dropdown → meter animates, categories update.
 3. Log activity via natural language → "I flew 500km" → correct category + value detected.
@@ -136,13 +138,13 @@ store: {
 
 1. **Every feature maps to the PS** — No wasted scope. Judge reads "individuals, understand, track, reduce, simple actions, personalized insights" and sees all 6 delivered.
 2. **5-second time-to-value** — No CSV upload wall. User lands, logs an activity, gets instant feedback.
-3. **Antigravity subagents used meaningfully** — Not tacked on. The parallel agent pipeline (calculate + recommend + insight) is the *engine*, not a checkbox.
+3. **Antigravity subagents used meaningfully** — Not tacked on. The parallel agent pipeline (calculate + recommend + insight) is the _engine_, not a checkbox.
 4. **Testing strategy exists and matters** — Testing the emission factor calculator (core business logic) and Zod validation (security boundary) is not busywork.
 5. **5 evaluation criteria explicitly engineered for** — Each strategy is a direct answer to what the AI judge checks.
 
 ## Submission Assets (separate files)
 
-| Asset | What |
-| :--- | :--- |
-| Technical Blog | Architecture decisions, prompt design reasoning, emission factor methodology, trade-offs |
-| LinkedIn Post | "Built in public" with screenshots, architecture diagram, personal carbon reduction story |
+| Asset          | What                                                                                      |
+| :------------- | :---------------------------------------------------------------------------------------- |
+| Technical Blog | Architecture decisions, prompt design reasoning, emission factor methodology, trade-offs  |
+| LinkedIn Post  | "Built in public" with screenshots, architecture diagram, personal carbon reduction story |
