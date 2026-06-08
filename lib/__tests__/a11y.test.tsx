@@ -9,20 +9,26 @@ import InsightsPage from "../../app/dashboard/insights/page";
 
 
 
+const mockStoreState = {
+  activities: [],
+  dailyFootprint: 0,
+  budgetUsed: 0,
+  weeklyTrend: [],
+  recommendations: [],
+  challenges: [],
+  insight: null,
+  isProcessing: false,
+  dailyBudget: 10,
+  region: "global",
+  loadSampleData: jest.fn(),
+  toggleChallenge: jest.fn(),
+  setDailyBudget: jest.fn(),
+  setRegion: jest.fn(),
+};
+
 jest.mock("../../lib/store", () => ({
-  useStore: () => ({
-    activities: [],
-    dailyFootprint: 0,
-    budgetUsed: 0,
-    weeklyTrend: [],
-    recommendations: [],
-    challenges: [],
-    insight: null,
-    isProcessing: false,
-    dailyBudget: 10,
-    region: "global",
-    loadSampleData: jest.fn(),
-    toggleChallenge: jest.fn(),
+  useStore: jest.fn((selector?: (s: typeof mockStoreState) => unknown) => {
+    return selector ? selector(mockStoreState) : mockStoreState;
   }),
 }));
 

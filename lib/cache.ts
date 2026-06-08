@@ -4,6 +4,9 @@ export class AICache<T = unknown> {
 
   constructor(ttlMs = 3600_000) {
     this.TTL_MS = ttlMs;
+    if (typeof process !== "undefined" && process.env.NODE_ENV === "test") {
+      return;
+    }
     const cleanup = setInterval(() => this.evictStale(), 600_000);
     if (cleanup.unref) cleanup.unref();
   }

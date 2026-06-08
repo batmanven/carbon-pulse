@@ -17,6 +17,7 @@ jest.mock("../../lib/store", () => ({
     setIsProcessing: mockSetIsProcessing,
     isProcessing: mockIsProcessing,
     region: "global",
+    dailyBudget: 10,
   }),
 }));
 
