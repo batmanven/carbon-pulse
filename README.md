@@ -66,7 +66,7 @@ User Input ("I drove 12km")
 
 ```bash
 git clone <your-repo-url>
-cd carbon-pulse
+cd mycelium
 npm install
 ```
 
