@@ -30,7 +30,7 @@ export class ErrorBoundary extends Component<Props, State> {
           role="alert"
         >
           <div className="text-center p-8 max-w-md">
-            <AlertTriangle className="w-12 h-12 text-brand-pink mx-auto mb-4" />
+            <AlertTriangle className="w-12 h-12 text-brand-pink mx-auto mb-4" aria-hidden="true" />
             <h2 className="text-[24px] font-semibold text-ink mb-2">
               Something went wrong
             </h2>

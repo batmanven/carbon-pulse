@@ -68,7 +68,7 @@ describe("ActivityLog", () => {
     render(<ActivityLog />);
     const input = screen.getByRole("textbox");
     fireEvent.change(input, { target: { value: "drove 10km" } });
-    const button = screen.getByRole("button", { name: /submit/i });
+    const button = screen.getByRole("button", { name: /process/i });
     expect(button).toBeDisabled();
   });
 

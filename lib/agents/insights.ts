@@ -33,12 +33,12 @@ Rules:
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-flash-latest",
       contents: prompt,
     });
 
-    return response.text || "Every small step counts towards a greener future.";
+    return response.text || "";
   } catch {
-    return "Keep up the great work tracking your footprint!";
+    return "";
   }
 }

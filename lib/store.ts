@@ -4,9 +4,34 @@ import { toast } from "sonner";
 import { startOfDay, subDays, format } from "date-fns";
 import { DEFAULT_REGION } from "./emissions";
 
+const PERSIST_KEY = "CARBON_ACTIVITIES";
+
 function getStoredRegion(): string {
   if (typeof window === "undefined") return DEFAULT_REGION;
   return localStorage.getItem("CARBON_REGION") || DEFAULT_REGION;
+}
+
+function getStoredActivities(): Activity[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(PERSIST_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function persistActivities(activities: Activity[]) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(PERSIST_KEY, JSON.stringify(activities));
+}
+
+function readBudget(): number {
+  if (typeof window === "undefined") return DEFAULT_BUDGET;
+  const raw = localStorage.getItem("CARBON_BUDGET");
+  if (!raw) return DEFAULT_BUDGET;
+  const val = parseFloat(raw);
+  return isNaN(val) || val <= 0 ? DEFAULT_BUDGET : val;
 }
 
 interface AppState {
@@ -86,16 +111,30 @@ const DEFAULT_CHALLENGES: Challenge[] = [
   },
 ];
 
+const preloadedActivities = getStoredActivities();
+const DEFAULT_BUDGET = 10;
+
+function getStoredBudget(): number {
+  if (typeof window === "undefined") return DEFAULT_BUDGET;
+  const val = parseFloat(localStorage.getItem("CARBON_BUDGET") || String(DEFAULT_BUDGET));
+  return isNaN(val) || val <= 0 ? DEFAULT_BUDGET : val;
+}
+
+const preloadedBudget = getStoredBudget();
+
 export const useStore = create<AppState>((set) => ({
-  activities: [],
-  dailyFootprint: 0,
-  budgetUsed: 0,
-  weeklyTrend: [],
+  activities: preloadedActivities,
+  dailyFootprint: computeDailyFootprint(preloadedActivities),
+  budgetUsed: Math.min(
+    (computeDailyFootprint(preloadedActivities) / preloadedBudget) * 100,
+    100,
+  ),
+  weeklyTrend: computeWeeklyTrend(preloadedActivities),
   recommendations: [],
   challenges: DEFAULT_CHALLENGES,
   insight: null,
   isProcessing: false,
-  dailyBudget: 10,
+  dailyBudget: preloadedBudget,
   region: getStoredRegion(),
 
   setDailyBudget: (budget: number) => set({ dailyBudget: budget }),
@@ -104,8 +143,9 @@ export const useStore = create<AppState>((set) => ({
   addActivity: (activity) =>
     set((state) => {
       const newActivities = [...state.activities, activity];
+      persistActivities(newActivities);
       const daily = computeDailyFootprint(newActivities);
-      const budget = parseFloat(localStorage.getItem("CARBON_BUDGET") || "10");
+      const budget = readBudget();
       return {
         activities: newActivities,
         dailyFootprint: daily,
@@ -137,12 +177,13 @@ export const useStore = create<AppState>((set) => ({
       const res = await fetch("/data/sample-activities.json");
       const data: Activity[] = await res.json();
       const daily = computeDailyFootprint(data);
-      const budget = parseFloat(localStorage.getItem("CARBON_BUDGET") || "10");
+      persistActivities(data);
+      const loadedBudget = readBudget();
       set({
         activities: data,
         dailyFootprint: daily,
-        dailyBudget: budget,
-        budgetUsed: Math.min((daily / budget) * 100, 100),
+        dailyBudget: loadedBudget,
+        budgetUsed: Math.min((daily / loadedBudget) * 100, 100),
         weeklyTrend: computeWeeklyTrend(data),
       });
       toast.success("Demo data loaded! Check out your insights.");
@@ -153,7 +194,8 @@ export const useStore = create<AppState>((set) => ({
   },
 
   clearActivities: () => {
-    const budget = parseFloat(localStorage.getItem("CARBON_BUDGET") || "10");
+    persistActivities([]);
+    const budget = readBudget();
     set({
       activities: [],
       dailyFootprint: 0,
@@ -166,6 +208,6 @@ export const useStore = create<AppState>((set) => ({
   },
 
   getDailyBudget: () => {
-    return parseFloat(localStorage.getItem("CARBON_BUDGET") || "10");
+    return readBudget();
   },
 }));

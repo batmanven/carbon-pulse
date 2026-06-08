@@ -20,10 +20,10 @@ export default function LogsPage() {
         </div>
         {activities.length > 0 && (
           <button
-            onClick={clearActivities}
+            onClick={() => { if (window.confirm("Clear all activity logs? This cannot be undone.")) clearActivities(); }}
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-strong text-ink font-semibold hover:bg-brand-pink hover:text-white transition-colors"
           >
-            <Trash2 className="w-4 h-4" />
+            <Trash2 className="w-4 h-4" aria-hidden="true" />
             Clear Data
           </button>
         )}
@@ -35,12 +35,12 @@ export default function LogsPage() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-surface-soft border-b border-hairline text-muted font-semibold text-[14px]">
-                  <th className="p-4 pl-6 whitespace-nowrap">Date</th>
-                  <th className="p-4">Category</th>
-                  <th className="p-4">Raw Input</th>
-                  <th className="p-4 text-right">Amount</th>
-                  <th className="p-4 text-right">CO₂e (kg)</th>
-                  <th className="p-4 pr-6">Global Equivalent</th>
+                  <th scope="col" className="p-4 pl-6 whitespace-nowrap">Date</th>
+                  <th scope="col" className="p-4">Category</th>
+                  <th scope="col" className="p-4">Raw Input</th>
+                  <th scope="col" className="p-4 text-right">Amount</th>
+                  <th scope="col" className="p-4 text-right">CO₂e (kg)</th>
+                  <th scope="col" className="p-4 pr-6">Global Equivalent</th>
                 </tr>
               </thead>
               <tbody>
@@ -84,7 +84,7 @@ export default function LogsPage() {
         </div>
       ) : (
         <div className="py-24 text-center bg-canvas border border-dashed border-hairline rounded-[24px]">
-          <FileText className="w-16 h-16 text-muted mx-auto mb-4 opacity-50" />
+          <FileText className="w-16 h-16 text-muted mx-auto mb-4 opacity-50" aria-hidden="true" />
           <h3 className="text-[20px] font-semibold text-ink mb-2">
             No logs found
           </h3>

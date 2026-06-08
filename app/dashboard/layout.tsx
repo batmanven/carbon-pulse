@@ -24,6 +24,9 @@ export default function DashboardLayout({
         <div
           className="fixed inset-0 bg-black/20 z-40 md:hidden"
           onClick={() => setIsMobileOpen(false)}
+          onKeyDown={(e) => { if (e.key === "Escape" || e.key === " ") setIsMobileOpen(false); }}
+          role="presentation"
+          tabIndex={-1}
         />
       )}
 
@@ -42,7 +45,7 @@ export default function DashboardLayout({
             onClick={() => setIsMobileOpen(false)}
             aria-label="Close menu"
           >
-            <X className="w-6 h-6" />
+            <X className="w-6 h-6" aria-hidden="true" />
           </button>
         </div>
         <nav className="flex-1 p-4 space-y-2">
@@ -59,7 +62,7 @@ export default function DashboardLayout({
                     : "text-muted hover:bg-surface-card hover:text-ink border border-transparent"
                 }`}
               >
-                <link.icon className="w-5 h-5" />
+                <link.icon className="w-5 h-5" aria-hidden="true" />
                 {link.label}
               </Link>
             );
@@ -75,7 +78,7 @@ export default function DashboardLayout({
                 : "text-muted hover:bg-surface-card hover:text-ink border border-transparent"
             }`}
           >
-            <Settings className="w-5 h-5" />
+            <Settings className="w-5 h-5" aria-hidden="true" />
             Settings
           </Link>
         </div>
@@ -94,7 +97,7 @@ export default function DashboardLayout({
             onClick={() => setIsMobileOpen(true)}
             aria-label="Open menu"
           >
-            <Menu className="w-6 h-6" />
+            <Menu className="w-6 h-6" aria-hidden="true" />
           </button>
         </header>
 

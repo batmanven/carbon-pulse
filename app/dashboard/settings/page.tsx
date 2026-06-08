@@ -36,7 +36,7 @@ export default function SettingsPage(): JSX.Element {
     <div className="max-w-4xl mx-auto px-6 py-12">
       <header className="mb-12">
         <h1 className="text-[40px] font-medium text-ink tracking-[-1.0px] mb-2 flex items-center gap-3">
-          <Settings2 className="w-8 h-8 text-muted" />
+          <Settings2 className="w-8 h-8 text-muted" aria-hidden="true" />
           Settings
         </h1>
         <p className="text-muted font-medium">
@@ -47,7 +47,7 @@ export default function SettingsPage(): JSX.Element {
       <form onSubmit={handleSave} className="space-y-8">
         <section className="bg-canvas border border-hairline rounded-[24px] p-8 shadow-sm">
           <h2 className="text-[20px] font-semibold text-ink mb-6 flex items-center gap-2">
-            <Database className="w-5 h-5 text-brand-teal" />
+            <Database className="w-5 h-5 text-brand-teal" aria-hidden="true" />
             Preferences
           </h2>
           <div className="space-y-6">
@@ -68,7 +68,7 @@ export default function SettingsPage(): JSX.Element {
 
             <div>
               <label className="block text-[15px] font-semibold text-ink mb-2">
-                <Globe className="w-4 h-4 inline mr-1.5 -mt-0.5" />
+                <Globe className="w-4 h-4 inline mr-1.5 -mt-0.5" aria-hidden="true" />
                 Region / Grid Context
               </label>
               <p className="text-[14px] text-muted font-medium mb-3">
@@ -92,7 +92,7 @@ export default function SettingsPage(): JSX.Element {
 
         <section className="bg-canvas border border-hairline rounded-[24px] p-8 shadow-sm">
           <h2 className="text-[20px] font-semibold text-ink mb-6 flex items-center gap-2">
-            <Key className="w-5 h-5 text-brand-pink" />
+            <Key className="w-5 h-5 text-brand-pink" aria-hidden="true" />
             AI Configuration (Hackathon Override)
           </h2>
           <div className="space-y-6">
@@ -119,7 +119,7 @@ export default function SettingsPage(): JSX.Element {
         <div className="flex justify-end">
           <button
             type="submit"
-            className="px-8 py-4 bg-ink text-canvas rounded-xl font-bold text-[16px] hover:opacity-90 transition-opacity shadow-sm"
+            className="px-8 py-4 cursor-pointer bg-ink text-canvas rounded-xl font-bold text-[16px] hover:opacity-90 transition-opacity shadow-sm"
           >
             Save Settings
           </button>

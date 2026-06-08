@@ -89,7 +89,7 @@ export default function Dashboard() {
           <div className="col-span-1 bg-brand-teal text-white rounded-[24px] p-8 flex flex-col justify-between">
             <div>
               <h3 className="text-[18px] font-semibold mb-4 flex items-center gap-2">
-                <Leaf className="w-6 h-6 text-brand-mint" />
+                <Leaf className="w-6 h-6 text-brand-mint" aria-hidden="true" />
                 Daily Footprint
               </h3>
               <div className="flex items-baseline gap-2 mb-1">
@@ -103,7 +103,7 @@ export default function Dashboard() {
               </p>
               {remaining > 0 ? (
                 <p className="text-white/70 text-[14px] font-medium">
-                  <TrendingDown className="w-4 h-4 inline mr-1" />
+                  <TrendingDown className="w-4 h-4 inline mr-1" aria-hidden="true" />
                   {remaining.toFixed(1)} kg remaining today
                 </p>
               ) : (
@@ -128,42 +128,52 @@ export default function Dashboard() {
             </div>
 
             {chartData.length > 0 && (
-              <div
-                className="h-[180px] w-full mt-6"
-                role="img"
-                aria-label="Category breakdown chart"
-              >
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={chartData}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={50}
-                      outerRadius={70}
-                      paddingAngle={5}
-                      dataKey="value"
-                    >
-                      {chartData.map((entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={COLORS[entry.name] || "#94a3b8"}
-                        />
-                      ))}
-                    </Pie>
-                    <Tooltip
-                      formatter={(value: unknown) => [
-                        `${Number(value).toFixed(2)} kg`,
-                        "Emissions",
-                      ]}
-                      contentStyle={{
-                        borderRadius: "12px",
-                        border: "none",
-                        boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
-                      }}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
+              <div className="mt-6">
+                <div
+                  className="h-[180px] w-full"
+                  role="img"
+                  aria-label="Category breakdown chart"
+                >
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={chartData}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={50}
+                        outerRadius={70}
+                        paddingAngle={5}
+                        dataKey="value"
+                      >
+                        {chartData.map((entry, index) => (
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={COLORS[entry.name] || "#94a3b8"}
+                          />
+                        ))}
+                      </Pie>
+                      <Tooltip
+                        formatter={(value: unknown) => [
+                          `${Number(value).toFixed(2)} kg`,
+                          "Emissions",
+                        ]}
+                        contentStyle={{
+                          borderRadius: "12px",
+                          border: "none",
+                          boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                        }}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="mt-3 flex flex-wrap gap-3 text-[12px] font-semibold" aria-hidden="true">
+                  {chartData.map((entry) => (
+                    <span key={entry.name} className="flex items-center gap-1.5 capitalize">
+                      <span className="w-3 h-3 rounded-sm inline-block" style={{ backgroundColor: COLORS[entry.name] || "#94a3b8" }} />
+                      {entry.name}: {entry.value.toFixed(1)} kg
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
 
@@ -177,7 +187,7 @@ export default function Dashboard() {
           {/* Recommendations */}
           <div className="col-span-2 bg-brand-peach text-ink rounded-[24px] p-8">
             <h3 className="text-[20px] font-semibold mb-6 flex items-center gap-2 tracking-tight">
-              <Zap className="w-6 h-6" />
+              <Zap className="w-6 h-6" aria-hidden="true" />
               AI Recommendations
             </h3>
             <div className="grid gap-4" aria-live="polite">
@@ -220,7 +230,7 @@ export default function Dashboard() {
           {weeklyTrend.length > 0 && (
             <div className="col-span-3 md:col-span-1 bg-surface-card rounded-[24px] p-8 border border-hairline shadow-sm">
               <h3 className="text-[18px] font-semibold text-ink mb-6 flex items-center gap-2 tracking-tight">
-                <Target className="w-5 h-5 text-brand-pink" />
+                <Target className="w-5 h-5 text-brand-pink" aria-hidden="true" />
                 Weekly Trend
               </h3>
               <div
@@ -245,7 +255,7 @@ export default function Dashboard() {
           {/* Challenges */}
           <div className="col-span-3 md:col-span-2 bg-surface-card rounded-[24px] p-8 border border-hairline shadow-sm">
             <h3 className="text-[18px] font-semibold text-ink mb-6 flex items-center gap-2 tracking-tight">
-              <Target className="w-5 h-5 text-brand-teal" />
+              <Target className="w-5 h-5 text-brand-teal" aria-hidden="true" />
               Challenges
             </h3>
             <div className="grid gap-3">
@@ -287,7 +297,7 @@ export default function Dashboard() {
           {/* Recent Logs */}
           <div className="col-span-3 bg-surface-card rounded-[24px] p-8 border border-hairline shadow-sm">
             <h3 className="text-[20px] font-semibold text-ink mb-6 flex items-center gap-2 tracking-tight">
-              <Map className="w-6 h-6 text-brand-pink" />
+              <Map className="w-6 h-6 text-brand-pink" aria-hidden="true" />
               Recent Logs
             </h3>
             <div className="flex flex-col">
@@ -326,7 +336,7 @@ export default function Dashboard() {
       ) : (
         <div className="py-24 px-6 text-center bg-canvas border border-dashed border-hairline rounded-[24px] max-w-2xl mx-auto shadow-sm">
           <div className="w-20 h-20 bg-surface-soft rounded-full flex items-center justify-center mx-auto mb-6">
-            <Leaf className="w-10 h-10 text-muted" />
+            <Leaf className="w-10 h-10 text-muted" aria-hidden="true" />
           </div>
           <h2 className="text-[24px] font-semibold text-ink mb-3">
             No activities logged yet
@@ -340,7 +350,7 @@ export default function Dashboard() {
             onClick={() => loadSampleData()}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-surface-strong text-ink font-semibold text-[15px] hover:bg-hairline transition-colors border border-hairline shadow-sm"
           >
-            <Database className="w-4 h-4" />
+            <Database className="w-4 h-4" aria-hidden="true" />
             Load Demo Data
           </button>
         </div>

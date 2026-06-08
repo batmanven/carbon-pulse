@@ -1,6 +1,5 @@
 "use client";
 import { useStore } from "../../../lib/store";
-import { PieChart, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function InsightsPage() {
@@ -28,7 +27,6 @@ export default function InsightsPage() {
         <div className="lg:col-span-1 space-y-8">
           <div className="bg-canvas border border-hairline rounded-[24px] p-8 shadow-sm">
             <h3 className="text-[18px] font-semibold mb-6 flex items-center gap-2">
-              <PieChart className="w-5 h-5 text-brand-pink" />
               Budget Analysis
             </h3>
             <div className="relative pt-4">
@@ -40,6 +38,10 @@ export default function InsightsPage() {
                 <div
                   className={`h-full rounded-full transition-all duration-1000 ${budgetUsed > 90 ? "bg-brand-pink" : "bg-brand-teal"}`}
                   style={{ width: `${budgetUsed}%` }}
+                  role="meter"
+                  aria-valuenow={budgetUsed}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
                 />
               </div>
               <p className="text-muted text-[14px] font-medium mt-4 leading-relaxed">
@@ -55,12 +57,15 @@ export default function InsightsPage() {
         <div className="lg:col-span-2">
           <div className="bg-surface-soft border border-hairline rounded-[24px] p-8 shadow-sm h-full">
             <h3 className="text-[20px] font-semibold text-ink mb-6 flex items-center gap-2 tracking-tight">
-              <Zap className="w-6 h-6 text-brand-peach" />
               High-Leverage AI Swaps
             </h3>
 
             {isProcessing ? (
-              <div className="animate-pulse space-y-4">
+              <div
+                className="animate-pulse space-y-4"
+                aria-busy="true"
+                aria-label="Loading AI recommendations"
+              >
                 {[1, 2, 3].map((i) => (
                   <div
                     key={i}

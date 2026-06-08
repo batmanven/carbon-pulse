@@ -25,7 +25,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <ErrorBoundary>
-          <div id="main-content">{children}</div>
+          <main id="main-content">{children}</main>
         </ErrorBoundary>
         <Toaster richColors position="top-right" />
       </body>

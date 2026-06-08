@@ -72,10 +72,10 @@ describe("getRecommendations", () => {
 });
 
 describe("generateInsight", () => {
-  it("returns fallback on empty response", async () => {
+  it("returns empty string on empty response", async () => {
     mockGenerateContent.mockResolvedValue({});
     const result = await generateInsight([], 10);
-    expect(result).toBeTruthy();
+    expect(result).toBe("");
   });
 
   it("returns AI text on success", async () => {
@@ -95,6 +95,6 @@ describe("generateInsight", () => {
       subCategory: "car", amount: 10, unit: "km", co2e: 1.7,
       equivalent: "test",
     }], 10);
-    expect(result).toBe("Keep up the great work tracking your footprint!");
+    expect(result).toBe("");
   });
 });

@@ -27,3 +27,17 @@ export const insightSchema = z.object({
   budget: z.number().positive(),
   region: z.string().optional(),
 });
+
+export const parseOutputSchema = z.object({
+  category: z.enum(["transport", "food", "energy", "shopping"]),
+  subCategory: z.string().min(1),
+  amount: z.number().nonnegative(),
+});
+
+export const recommendationSchema = z.object({
+  id: z.string().min(1),
+  title: z.string().min(1).max(100),
+  description: z.string().min(1).max(500),
+  potentialSavings: z.number().nonnegative().max(10000),
+  difficulty: z.enum(["Easy", "Medium", "Hard"]),
+});

@@ -1,6 +1,28 @@
 import { GoogleGenAI } from "@google/genai";
 import { Activity, Recommendation } from "../types";
 import { getRegionLabel } from "../emissions";
+import { z } from "zod";
+import { recommendationSchema } from "../schema";
+
+const recommendationArraySchema = z.array(recommendationSchema);
+
+async function generateContentSafe(
+  ai: GoogleGenAI,
+  prompt: string,
+): Promise<string | null> {
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-flash-latest",
+      contents: prompt,
+      config: {
+        responseMimeType: "application/json",
+      },
+    });
+    return response.text || null;
+  } catch {
+    return null;
+  }
+}
 
 export async function getRecommendations(
   activities: Activity[],
@@ -13,7 +35,8 @@ export async function getRecommendations(
     apiKey: apiKeyOverride || process.env.GEMINI_API_KEY,
   });
 
-  const activitiesContext = activities
+  const recentActivities = activities.slice(-30);
+  const activitiesContext = recentActivities
     .map((a) => `${a.amount}${a.unit} of ${a.subCategory} (${a.co2e}kg CO2)`)
     .join("\n");
 
@@ -46,19 +69,17 @@ User Activities:
 ${activitiesContext}
   `;
 
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: prompt,
-      config: {
-        responseMimeType: "application/json",
-      },
-    });
+  const text = await generateContentSafe(ai, prompt);
+  if (!text) return [];
 
-    if (!response.text) return [];
-    return JSON.parse(response.text) as Recommendation[];
-  } catch (error) {
-    console.error("Recommender Agent Error:", error);
+  try {
+    const parsed = JSON.parse(text);
+    const result = recommendationArraySchema.safeParse(parsed);
+    if (result.success) {
+      return result.data;
+    }
+    return [];
+  } catch {
     return [];
   }
 }

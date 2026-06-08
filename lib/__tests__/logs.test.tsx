@@ -87,7 +87,8 @@ describe("LogsPage", () => {
     expect(screen.getByText("Clear Data")).toBeInTheDocument();
   });
 
-  it("calls clearActivities when Clear Data is clicked", () => {
+  it("calls clearActivities when Clear Data is clicked and confirmed", () => {
+    window.confirm = jest.fn().mockReturnValue(true);
     (useStore as jest.Mock).mockReturnValue({
       ...baseState,
       activities: [

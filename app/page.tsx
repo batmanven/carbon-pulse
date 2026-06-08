@@ -29,7 +29,7 @@ export default function Home() {
           </div>
           <div className="md:w-5/12 flex justify-center md:flex relative">
             <div className="w-[400px] h-[400px] bg-brand-pink rounded-[48px] transform rotate-3 flex items-center justify-center shadow-xl border border-ink/5">
-              <Leaf className="w-40 h-40 text-ink opacity-90" />
+              <Leaf className="w-40 h-40 text-ink opacity-90" aria-hidden="true" />
             </div>
           </div>
         </header>
@@ -49,7 +49,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-canvas border border-hairline p-8 rounded-[24px] shadow-sm text-center">
               <div className="w-16 h-16 bg-brand-lavender text-ink flex items-center justify-center rounded-2xl mx-auto mb-6">
-                <Target className="w-8 h-8" />
+                <Target className="w-8 h-8" aria-hidden="true" />
               </div>
               <h3 className="text-[20px] font-semibold text-ink mb-3">
                 1. Tell us what you did
@@ -62,7 +62,7 @@ export default function Home() {
 
             <div className="bg-canvas border border-hairline p-8 rounded-[24px] shadow-sm text-center">
               <div className="w-16 h-16 bg-brand-teal text-white flex items-center justify-center rounded-2xl mx-auto mb-6">
-                <Zap className="w-8 h-8" />
+                <Zap className="w-8 h-8" aria-hidden="true" />
               </div>
               <h3 className="text-[20px] font-semibold text-ink mb-3">
                 2. AI Calculates the impact
@@ -75,7 +75,7 @@ export default function Home() {
 
             <div className="bg-canvas border border-hairline p-8 rounded-[24px] shadow-sm text-center">
               <div className="w-16 h-16 bg-brand-peach text-ink flex items-center justify-center rounded-2xl mx-auto mb-6">
-                <RefreshCw className="w-8 h-8" />
+                <RefreshCw className="w-8 h-8" aria-hidden="true" />
               </div>
               <h3 className="text-[20px] font-semibold text-ink mb-3">
                 3. Discover effortless swaps
