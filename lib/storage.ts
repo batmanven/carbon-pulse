@@ -1,8 +1,8 @@
 import { Activity } from "@/lib/types";
 import { DEFAULT_REGION } from "@/lib/emissions";
 
-export const PERSIST_KEY = "CARBON_ACTIVITIES";
-export const DEFAULT_BUDGET = 10;
+const PERSIST_KEY = "CARBON_ACTIVITIES";
+const DEFAULT_BUDGET = 10;
 
 export function getStoredRegion(): string {
   if (typeof window === "undefined") return DEFAULT_REGION;

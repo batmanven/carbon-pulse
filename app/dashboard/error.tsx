@@ -1,8 +1,6 @@
 "use client";
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
 export default function DashboardError({
-  error: _error,
   reset,
 }: {
   error: Error & { digest?: string };

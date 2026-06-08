@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { POST as parseRoute } from "../../app/api/parse/route";
 import { POST as recommendRoute } from "../../app/api/recommend/route";
 import { POST as insightRoute } from "../../app/api/insight/route";
@@ -24,12 +23,12 @@ jest.mock("next/server", () => ({
 
 if (typeof global.Request === "undefined") {
   global.Request = class Request {
-    constructor(_input: unknown, _init?: unknown) {}
+    constructor(input: unknown, init?: unknown) { void input; void init; }
   } as unknown as typeof Request;
 }
 if (typeof global.Response === "undefined") {
   global.Response = class Response {
-    constructor(_body?: unknown, _init?: unknown) {}
+    constructor(body?: unknown, init?: unknown) { void body; void init; }
   } as unknown as typeof Response;
 }
 

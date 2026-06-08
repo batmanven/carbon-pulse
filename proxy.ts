@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 const CLEANUP_INTERVAL = 3_600_000;
 interface RateLimitEntry { count: number; lastReset: number }
 
-export function createRateLimiter(windowMs = 60_000, limit = 30) {
+function createRateLimiter(windowMs = 60_000, limit = 30) {
   const rateLimitMap = new Map<string, RateLimitEntry>();
 
   const cleanup = setInterval(() => {
@@ -16,7 +16,7 @@ export function createRateLimiter(windowMs = 60_000, limit = 30) {
 
   if (cleanup.unref) cleanup.unref();
 
-  return function check(req: NextRequest): ReturnType<typeof NextResponse.next> | Response {
+  return function rateLimitHandler(req: NextRequest): Response {
     if (!req.nextUrl.pathname.startsWith("/api/")) return NextResponse.next();
 
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "127.0.0.1";
@@ -45,10 +45,10 @@ export function createRateLimiter(windowMs = 60_000, limit = 30) {
   };
 }
 
-const check = createRateLimiter();
+const rateLimitHandler = createRateLimiter();
 
 export function proxy(req: NextRequest) {
-  return check(req);
+  return rateLimitHandler(req);
 }
 
 export const config = {

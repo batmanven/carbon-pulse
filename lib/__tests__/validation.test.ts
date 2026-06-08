@@ -44,9 +44,7 @@ describe("activitySchema", () => {
   });
 
   it("validates activity without rawInput", () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { rawInput: _rawInput, ...noRaw } = validActivity;
-    expect(activitySchema.safeParse(noRaw).success).toBe(true);
+    expect(activitySchema.safeParse({ ...validActivity, rawInput: undefined }).success).toBe(true);
   });
 
   it("rejects activity with non-numeric amount", () => {
@@ -54,8 +52,8 @@ describe("activitySchema", () => {
   });
 
   it("rejects activity with missing category", () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { category: _category, ...noCat } = validActivity;
+    const { category, ...noCat } = validActivity;
+    void category;
     expect(activitySchema.safeParse(noCat).success).toBe(false);
   });
 });

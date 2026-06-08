@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { Activity, Recommendation, Challenge } from "@/lib/types";
 import { toast } from "sonner";
-import { startOfDay, subDays, format } from "date-fns";
+import { computeDailyFootprint, computeWeeklyTrend } from "@/lib/compute";
 import {
   getStoredRegion,
   getStoredActivities,
@@ -29,34 +29,6 @@ interface AppState {
   toggleChallenge: (id: string) => void;
   loadSampleData: () => Promise<void>;
   clearActivities: () => void;
-  getDailyBudget: () => number;
-}
-
-function computeWeeklyTrend(activities: Activity[]) {
-  const today = startOfDay(new Date());
-  const buckets: Record<string, number> = {};
-  for (let i = 6; i >= 0; i--) {
-    const d = subDays(today, i);
-    const key = format(d, "EEE");
-    buckets[key] = 0;
-  }
-  for (const act of activities) {
-    const day = startOfDay(new Date(act.timestamp));
-    const key = format(day, "EEE");
-    if (key in buckets) {
-      buckets[key] += act.co2e;
-    }
-  }
-  return Object.entries(buckets).map(([date, value]) => ({ date, value }));
-}
-
-function computeDailyFootprint(activities: Activity[]) {
-  const today = startOfDay(new Date());
-  return activities
-    .filter(
-      (a) => startOfDay(new Date(a.timestamp)).getTime() === today.getTime(),
-    )
-    .reduce((sum, a) => sum + a.co2e, 0);
 }
 
 const DEFAULT_CHALLENGES: Challenge[] = [
@@ -90,7 +62,7 @@ const preloadedActivities = getStoredActivities();
 
 const preloadedBudget = readBudget();
 
-export const useStore = create<AppState>((set, get) => ({
+export const useStore = create<AppState>((set) => ({
   activities: preloadedActivities,
   dailyFootprint: computeDailyFootprint(preloadedActivities),
   budgetUsed: Math.min(
@@ -186,9 +158,5 @@ export const useStore = create<AppState>((set, get) => ({
       recommendations: [],
       insight: null,
     });
-  },
-
-  getDailyBudget: () => {
-    return get().dailyBudget;
   },
 }));

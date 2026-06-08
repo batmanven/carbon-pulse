@@ -1,5 +1,5 @@
-export type FactorEntry = { value: number; unit: string; description: string };
-export type EmissionFactorMap = Record<string, Record<string, FactorEntry>>;
+type FactorEntry = { value: number; unit: string; description: string };
+type EmissionFactorMap = Record<string, Record<string, FactorEntry>>;
 
 export const EMISSION_FACTORS: EmissionFactorMap = {
   transport: {
