@@ -13,24 +13,27 @@ export default function DashboardLayout({
   return (
     <div className="flex min-h-screen bg-canvas text-body font-sans selection:bg-brand-pink selection:text-white relative">
       {isMobileOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/20 z-40 md:hidden"
           onClick={() => setIsMobileOpen(false)}
         />
       )}
 
-      <aside className={`fixed md:static inset-y-0 left-0 z-50 w-64 bg-surface-soft border-r border-hairline flex flex-col transform transition-transform duration-300 ease-in-out ${isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
+      <aside
+        className={`fixed md:static inset-y-0 left-0 z-50 w-64 bg-surface-soft border-r border-hairline flex flex-col transform transition-transform duration-300 ease-in-out ${isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
+      >
         <div className="p-6 border-b border-hairline flex items-center justify-between">
           <Link
             href="/"
             className="text-[20px] font-semibold text-ink tracking-tight flex items-center gap-2"
           >
-            <span className="w-8 h-8 rounded-full bg-brand-pink flex items-center justify-center text-white text-sm font-bold">
-              C
-            </span>
+
             Carbon Pulse
           </Link>
-          <button className="md:hidden text-ink" onClick={() => setIsMobileOpen(false)}>
+          <button
+            className="md:hidden text-ink"
+            onClick={() => setIsMobileOpen(false)}
+          >
             <X className="w-6 h-6" />
           </button>
         </div>
@@ -78,9 +81,6 @@ export default function DashboardLayout({
             href="/"
             className="text-[18px] font-semibold text-ink tracking-tight flex items-center gap-2"
           >
-            <span className="w-6 h-6 rounded-full bg-brand-pink flex items-center justify-center text-white text-xs font-bold">
-              C
-            </span>
             Carbon Pulse
           </Link>
           <button className="text-ink" onClick={() => setIsMobileOpen(true)}>
