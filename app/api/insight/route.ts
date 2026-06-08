@@ -1,20 +1,31 @@
 import { NextResponse } from "next/server";
 import { generateInsight } from "../../../lib/agents/insights";
+import { insightSchema } from "../../../lib/schema";
+import { z } from "zod";
 
 export async function POST(req: Request) {
   try {
-    const { history, budget } = await req.json();
+    const body = await req.json();
+    const validatedData = insightSchema.parse(body);
     const apiKeyOverride = req.headers.get("x-api-key") || undefined;
 
-    if (!history || budget === undefined) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
-    }
-
-    const insight = await generateInsight(history, budget, apiKeyOverride);
+    const insight = await generateInsight(
+      validatedData.history,
+      validatedData.budget,
+      apiKeyOverride,
+    );
     return NextResponse.json({ insight });
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    console.error("Insight API Error:", error);
-    return NextResponse.json({ error: error.message || "Failed to generate insight" }, { status: 500 });
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: "Invalid insight data provided." },
+        { status: 400 },
+      );
+    }
+    return NextResponse.json(
+      { error: "An unexpected error occurred during insight generation." },
+      { status: 500 },
+    );
   }
 }
