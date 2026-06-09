@@ -34,7 +34,7 @@ jest.mock("next/server", () => {
   return { NextResponse: MockNextResponse };
 });
 
-import { middleware as proxy } from "@/app/middleware";
+import { proxy } from "@/proxy";
 
 interface MockedResponse {
   status: number;
