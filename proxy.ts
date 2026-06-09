@@ -64,7 +64,7 @@ function createRateLimiter(
 
 const rateLimitHandler = createRateLimiter();
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   return rateLimitHandler(req);
 }
 

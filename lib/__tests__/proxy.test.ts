@@ -1,25 +1,40 @@
-jest.mock("next/server", () => ({
-  NextResponse: {
-    next: () => ({
-      status: 200,
-      body: null,
-      headers: {
-        get: () => null,
-        set: () => {},
-      },
-    }),
-    json: (body: unknown, init?: { status?: number; headers?: Record<string, string> }) => ({
-      status: init?.status || 200,
-      body: JSON.stringify(body),
-      headers: {
-        get: () => null,
-        set: () => {},
-      },
-    }),
-  },
-}));
+/* eslint-disable @typescript-eslint/no-explicit-any */
+jest.mock("next/server", () => {
+  class MockHeaders {
+    private map = new Map<string, string>();
+    get(name: string) { return this.map.get(name.toLowerCase()) || null; }
+    set(name: string, value: string) { this.map.set(name.toLowerCase(), value); }
+  }
 
-import { middleware as proxy } from "@/middleware";
+  class MockNextResponse {
+    status: number;
+    body: any;
+    headers: MockHeaders;
+
+    constructor(body?: any, init?: { status?: number; headers?: Record<string, string> }) {
+      this.body = body;
+      this.status = init?.status || 200;
+      this.headers = new MockHeaders();
+      if (init?.headers) {
+        for (const [k, v] of Object.entries(init.headers)) {
+          this.headers.set(k, v);
+        }
+      }
+    }
+
+    static next() {
+      return new MockNextResponse(null, { status: 200 });
+    }
+
+    static json(body: any, init?: { status?: number; headers?: Record<string, string> }) {
+      return new MockNextResponse(JSON.stringify(body), init);
+    }
+  }
+
+  return { NextResponse: MockNextResponse };
+});
+
+import { proxy } from "@/proxy";
 
 interface MockedResponse {
   status: number;
@@ -66,7 +81,7 @@ describe("Next.js 16 Edge Proxy (Rate Limiter)", () => {
   });
 
   it("passes through non-API requests", () => {
-    const req = new MockNextRequest("/dashboard") as unknown as Request;
+    const req = new MockNextRequest("/dashboard") as any;
     const res = proxy(req) as unknown as MockedResponse;
 
     expect(res.status).toBe(200);
@@ -74,7 +89,7 @@ describe("Next.js 16 Edge Proxy (Rate Limiter)", () => {
   });
 
   it("applies rate limiting for API requests and sets header", () => {
-    const req = new MockNextRequest("/api/recommend") as unknown as Request;
+    const req = new MockNextRequest("/api/recommend") as any;
 
     let res = proxy(req) as unknown as MockedResponse;
     expect(res.status).toBe(200);
@@ -86,8 +101,8 @@ describe("Next.js 16 Edge Proxy (Rate Limiter)", () => {
   });
 
   it("respects x-forwarded-for client IP separating limits", () => {
-    const req1 = new MockNextRequest("/api/recommend", { "x-forwarded-for": "1.2.3.4" }) as unknown as Request;
-    const req2 = new MockNextRequest("/api/recommend", { "x-forwarded-for": "5.6.7.8" }) as unknown as Request;
+    const req1 = new MockNextRequest("/api/recommend", { "x-forwarded-for": "1.2.3.4" }) as any;
+    const req2 = new MockNextRequest("/api/recommend", { "x-forwarded-for": "5.6.7.8" }) as any;
 
     const res1 = proxy(req1) as unknown as MockedResponse;
     expect(res1.headers.get("X-RateLimit-Remaining")).toBe("29");
@@ -97,7 +112,7 @@ describe("Next.js 16 Edge Proxy (Rate Limiter)", () => {
   });
 
   it("triggers 429 after limit exceeded", () => {
-    const req = new MockNextRequest("/api/recommend", { "x-forwarded-for": "9.9.9.9" }) as unknown as Request;
+    const req = new MockNextRequest("/api/recommend", { "x-forwarded-for": "9.9.9.9" }) as any;
 
     for (let i = 0; i < 30; i++) {
       const res = proxy(req) as unknown as MockedResponse;
@@ -110,7 +125,7 @@ describe("Next.js 16 Edge Proxy (Rate Limiter)", () => {
   });
 
   it("resets rate limit counter after window passes", () => {
-    const req = new MockNextRequest("/api/recommend", { "x-forwarded-for": "8.8.8.8" }) as unknown as Request;
+    const req = new MockNextRequest("/api/recommend", { "x-forwarded-for": "8.8.8.8" }) as any;
 
     let res = proxy(req) as unknown as MockedResponse;
     expect(res.headers.get("X-RateLimit-Remaining")).toBe("29");
