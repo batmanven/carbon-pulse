@@ -2,21 +2,7 @@ import { useActivityStore } from "./activity-store";
 import { useSettingsStore } from "./settings-store";
 import { useAIStore } from "./ai-store";
 
-export { useActivityStore } from "./activity-store";
-export { useSettingsStore } from "./settings-store";
-export { useAIStore } from "./ai-store";
 
-export function useStore() {
-  const activity = useActivityStore();
-  const settings = useSettingsStore();
-  const ai = useAIStore();
-
-  return {
-    ...activity,
-    ...settings,
-    ...ai,
-  };
-}
 
 export function useActivities() {
   return useActivityStore((s) => s.activities);

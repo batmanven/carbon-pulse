@@ -9,7 +9,7 @@ interface PillarCardProps {
   iconColor: string;
 }
 
-export function PillarCard({ title, description, icon, iconBgColor, iconColor }: PillarCardProps) {
+function PillarCard({ title, description, icon, iconBgColor, iconColor }: PillarCardProps) {
   return (
     <div className="bg-canvas border border-hairline p-8 rounded-[24px] shadow-sm text-center">
       <div className={`w-16 h-16 ${iconBgColor} ${iconColor} flex items-center justify-center rounded-2xl mx-auto mb-6`}>

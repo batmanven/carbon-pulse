@@ -1,10 +1,30 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { render, screen, fireEvent } from "@testing-library/react";
 import LogsPage from "../../app/dashboard/logs/page";
+import { Activity, Recommendation, Challenge } from "../../lib/types";
+
+interface MockState {
+  activities?: Activity[];
+  dailyFootprint?: number;
+  budgetUsed?: number;
+  dailyBudget?: number;
+  region?: string;
+  weeklyTrend?: { date: string; value: number }[];
+  recommendations?: Recommendation[];
+  challenges?: Challenge[];
+  insight?: string | null;
+  isProcessing?: boolean;
+  loadSampleData?: jest.Mock;
+  toggleChallenge?: jest.Mock;
+  addActivity?: jest.Mock;
+  setRecommendations?: jest.Mock;
+  setInsight?: jest.Mock;
+  setIsProcessing?: jest.Mock;
+  clearActivities?: jest.Mock;
+}
 
 const mockClearActivities = jest.fn();
 
-const baseState: any = {
+const baseState: MockState = {
   activities: [],
   clearActivities: mockClearActivities,
 };

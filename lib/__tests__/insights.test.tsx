@@ -1,8 +1,28 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { render, screen } from "@testing-library/react";
 import InsightsPage from "../../app/dashboard/insights/page";
+import { Activity, Recommendation, Challenge } from "../../lib/types";
 
-const baseState: any = {
+interface MockState {
+  activities?: Activity[];
+  dailyFootprint?: number;
+  budgetUsed?: number;
+  dailyBudget?: number;
+  region?: string;
+  weeklyTrend?: { date: string; value: number }[];
+  recommendations?: Recommendation[];
+  challenges?: Challenge[];
+  insight?: string | null;
+  isProcessing?: boolean;
+  loadSampleData?: jest.Mock;
+  toggleChallenge?: jest.Mock;
+  addActivity?: jest.Mock;
+  setRecommendations?: jest.Mock;
+  setInsight?: jest.Mock;
+  setIsProcessing?: jest.Mock;
+  clearActivities?: jest.Mock;
+}
+
+const baseState: MockState = {
   recommendations: [],
   insight: null,
   dailyFootprint: 0,
@@ -37,7 +57,12 @@ jest.mock("../../lib/store", () => ({
 
 jest.mock("framer-motion", () => ({
   motion: {
-    div: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => <div {...props}>{children}</div>,
+    div: ({
+      children,
+      ...props
+    }: React.PropsWithChildren<Record<string, unknown>>) => (
+      <div {...props}>{children}</div>
+    ),
   },
 }));
 
@@ -46,8 +71,6 @@ jest.mock("lucide-react", () => ({
   PieChart: () => <span>PieChart</span>,
   Zap: () => <span>Zap</span>,
 }));
-
-
 
 describe("InsightsPage", () => {
   beforeEach(() => {
@@ -62,20 +85,36 @@ describe("InsightsPage", () => {
 
   it("shows log more activities message when no recommendations", () => {
     render(<InsightsPage />);
-    expect(screen.getByText(/Log more activities on the Overview page/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Log more activities on the Overview page/),
+    ).toBeInTheDocument();
   });
 
   it("shows start message when budget is 0", () => {
     render(<InsightsPage />);
-    expect(screen.getByText(/Log an activity to get started/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Log an activity to get started/),
+    ).toBeInTheDocument();
   });
 
   it("displays recommendations when present", () => {
     mockStoreState = {
       ...baseState,
       recommendations: [
-        { id: "r1", title: "Swap car for bus", description: "Take the bus instead", potentialSavings: 280, difficulty: "Easy" },
-        { id: "r2", title: "Meatless Monday", description: "Skip beef once a week", potentialSavings: 150, difficulty: "Medium" },
+        {
+          id: "r1",
+          title: "Swap car for bus",
+          description: "Take the bus instead",
+          potentialSavings: 280,
+          difficulty: "Easy",
+        },
+        {
+          id: "r2",
+          title: "Meatless Monday",
+          description: "Skip beef once a week",
+          potentialSavings: 150,
+          difficulty: "Medium",
+        },
       ],
     };
     render(<InsightsPage />);
@@ -113,15 +152,29 @@ describe("InsightsPage", () => {
       budgetUsed: 30,
     };
     render(<InsightsPage />);
-    expect(screen.getByText("You're in the top 15% of low-carbon commuters!")).toBeInTheDocument();
+    expect(
+      screen.getByText("You're in the top 15% of low-carbon commuters!"),
+    ).toBeInTheDocument();
   });
 
   it("shows difficulty labels on recommendations", () => {
     mockStoreState = {
       ...baseState,
       recommendations: [
-        { id: "r1", title: "Swap", description: "Desc", potentialSavings: 100, difficulty: "Easy" as const },
-        { id: "r2", title: "Skip", description: "Desc", potentialSavings: 200, difficulty: "Hard" as const },
+        {
+          id: "r1",
+          title: "Swap",
+          description: "Desc",
+          potentialSavings: 100,
+          difficulty: "Easy" as const,
+        },
+        {
+          id: "r2",
+          title: "Skip",
+          description: "Desc",
+          potentialSavings: 200,
+          difficulty: "Hard" as const,
+        },
       ],
     };
     render(<InsightsPage />);

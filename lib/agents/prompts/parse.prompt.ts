@@ -1,4 +1,4 @@
-export const PARSE_SYSTEM_PROMPT = `
+const PARSE_SYSTEM_PROMPT = `
 You are an expert NLP Parser for a Carbon Footprint tracker.
 Your task is to analyze the user's natural language input and extract the precise entity parameters.
 Inputs may be messy, colloquial, or missing context.

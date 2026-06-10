@@ -57,6 +57,6 @@ export async function fetchAIFeedback(
   }
 }
 
-export function getDefaultHeaders(): Record<string, string> {
+function getDefaultHeaders(): Record<string, string> {
   return { "Content-Type": "application/json" };
 }

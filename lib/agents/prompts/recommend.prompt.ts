@@ -1,4 +1,4 @@
-export const RECOMMEND_SYSTEM_PROMPT = `
+const RECOMMEND_SYSTEM_PROMPT = `
 You are an expert Behavioral Psychologist and Environmental Scientist.
 Analyze the user's recent carbon-emitting activities and generate exactly 3 high-leverage lifestyle swaps.{regionContext}
 

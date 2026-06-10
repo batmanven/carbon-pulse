@@ -1,5 +1,4 @@
 export {
-  useStore,
   useActivities,
   useDailyFootprint,
   useBudgetUsed,
@@ -19,7 +18,4 @@ export {
   useToggleChallenge,
   useLoadSampleData,
   useClearActivities,
-  useActivityStore,
-  useSettingsStore,
-  useAIStore,
 } from "./stores";
