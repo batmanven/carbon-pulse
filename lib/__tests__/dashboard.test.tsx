@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import Dashboard from "../../app/dashboard/page";
 
 const mockLoadSampleData = jest.fn();
 const mockToggleChallenge = jest.fn();
 
-const baseState = {
-  activities: [],
+const baseState: any = {
+  activities: [] as any[],
   dailyFootprint: 0,
   budgetUsed: 0,
   dailyBudget: 10,
@@ -13,8 +14,22 @@ const baseState = {
   weeklyTrend: [],
   recommendations: [],
   challenges: [
-    { id: "c1", title: "Meatless Monday", description: "Skip meat", active: false, streak: 0, completed: false },
-    { id: "c2", title: "Bike to Work", description: "Use a bike", active: false, streak: 0, completed: false },
+    {
+      id: "c1",
+      title: "Meatless Monday",
+      description: "Skip meat",
+      active: false,
+      streak: 0,
+      completed: false,
+    },
+    {
+      id: "c2",
+      title: "Bike to Work",
+      description: "Use a bike",
+      active: false,
+      streak: 0,
+      completed: false,
+    },
   ],
   insight: null,
   isProcessing: false,
@@ -25,27 +40,68 @@ const baseState = {
 const stateWithActivities = {
   ...baseState,
   activities: [
-    { id: "1", category: "transport", subCategory: "car", amount: 10, unit: "km", co2e: 1.7, timestamp: new Date().toISOString(), equivalent: "= 212x phone", rawInput: "drove" },
+    {
+      id: "1",
+      category: "transport",
+      subCategory: "car",
+      amount: 10,
+      unit: "km",
+      co2e: 1.7,
+      timestamp: new Date().toISOString(),
+      equivalent: "= 212x phone",
+      rawInput: "drove",
+    },
   ],
   dailyFootprint: 1.7,
   budgetUsed: 17,
   weeklyTrend: [{ date: "Mon", value: 1.7 }],
 };
 
+let mockStoreState = baseState;
+
 jest.mock("../../lib/store", () => ({
-  useStore: jest.fn(() => baseState),
+  useStore: jest.fn(() => mockStoreState),
+  useActivities: () => mockStoreState.activities,
+  useDailyFootprint: () => mockStoreState.dailyFootprint,
+  useBudgetUsed: () => mockStoreState.budgetUsed,
+  useDailyBudget: () => mockStoreState.dailyBudget,
+  useWeeklyTrend: () => mockStoreState.weeklyTrend,
+  useRecommendations: () => mockStoreState.recommendations,
+  useChallenges: () => mockStoreState.challenges,
+  useInsight: () => mockStoreState.insight,
+  useLoadSampleData: () => mockStoreState.loadSampleData,
+  useToggleChallenge: () => mockStoreState.toggleChallenge,
+  useAddActivity: () => mockStoreState.addActivity,
+  useSetRecommendations: () => mockStoreState.setRecommendations,
+  useSetInsight: () => mockStoreState.setInsight,
+  useSetIsProcessing: () => mockStoreState.setIsProcessing,
+  useIsProcessing: () => mockStoreState.isProcessing,
+  useRegion: () => mockStoreState.region,
+  useClearActivities: () => mockStoreState.clearActivities,
 }));
 
 jest.mock("next/dynamic", () => {
-  const Mock = ({ children }: { children: React.ReactNode }) => <div data-testid="dynamic-chart">{children}</div>;
+  const Mock = ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="dynamic-chart">{children}</div>
+  );
   Mock.displayName = "DynamicMock";
   return () => Mock;
 });
 
 jest.mock("framer-motion", () => ({
   motion: {
-    div: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => <div {...props}>{children}</div>,
-    button: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => <button {...props}>{children}</button>,
+    div: ({
+      children,
+      ...props
+    }: React.PropsWithChildren<Record<string, unknown>>) => (
+      <div {...props}>{children}</div>
+    ),
+    button: ({
+      children,
+      ...props
+    }: React.PropsWithChildren<Record<string, unknown>>) => (
+      <button {...props}>{children}</button>
+    ),
   },
 }));
 
@@ -62,12 +118,10 @@ jest.mock("lucide-react", () => ({
   TrendingDown: () => <span>TrendingDown</span>,
 }));
 
-const { useStore } = jest.requireMock("../../lib/store");
-
 beforeEach(() => {
   jest.clearAllMocks();
   jest.useFakeTimers();
-  (useStore as jest.Mock).mockReturnValue(baseState);
+  mockStoreState = baseState;
 });
 
 afterEach(() => {
@@ -76,14 +130,18 @@ afterEach(() => {
 
 function renderDashboard() {
   const view = render(<Dashboard />);
-  act(() => { jest.advanceTimersByTime(10); });
+  act(() => {
+    jest.advanceTimersByTime(10);
+  });
   return view;
 }
 
 describe("Dashboard", () => {
   it("renders the header", () => {
     renderDashboard();
-    expect(screen.getByText("Track, Understand, and Reduce Your Carbon Footprint")).toBeInTheDocument();
+    expect(
+      screen.getByText("Track, Understand, and Reduce Your Carbon Footprint"),
+    ).toBeInTheDocument();
   });
 
   it("shows empty state when no activities", () => {
@@ -99,7 +157,7 @@ describe("Dashboard", () => {
   });
 
   it("renders daily footprint card when activities exist", () => {
-    (useStore as jest.Mock).mockReturnValue(stateWithActivities);
+    mockStoreState = stateWithActivities;
     renderDashboard();
     expect(screen.getByText("1.7")).toBeInTheDocument();
     expect(screen.getByText(/kg CO₂e/)).toBeInTheDocument();
@@ -108,14 +166,14 @@ describe("Dashboard", () => {
   });
 
   it("renders challenges section when activities exist", () => {
-    (useStore as jest.Mock).mockReturnValue(stateWithActivities);
+    mockStoreState = stateWithActivities;
     renderDashboard();
     expect(screen.getByText("Meatless Monday")).toBeInTheDocument();
     expect(screen.getByText("Bike to Work")).toBeInTheDocument();
   });
 
   it("toggles challenge on click", () => {
-    (useStore as jest.Mock).mockReturnValue(stateWithActivities);
+    mockStoreState = stateWithActivities;
     renderDashboard();
     const buttons = screen.getAllByText("Start");
     fireEvent.click(buttons[0]);
@@ -123,12 +181,24 @@ describe("Dashboard", () => {
   });
 
   it("shows over budget message when over limit", () => {
-    (useStore as jest.Mock).mockReturnValue({
+    mockStoreState = {
       ...stateWithActivities,
-      activities: [{ id: "1", category: "transport", subCategory: "car", amount: 100, unit: "km", co2e: 17, timestamp: new Date().toISOString(), equivalent: "test", rawInput: "drove" }],
+      activities: [
+        {
+          id: "1",
+          category: "transport",
+          subCategory: "car",
+          amount: 100,
+          unit: "km",
+          co2e: 17,
+          timestamp: new Date().toISOString(),
+          equivalent: "test",
+          rawInput: "drove",
+        },
+      ],
       dailyFootprint: 17,
       budgetUsed: 100,
-    });
+    };
     renderDashboard();
     expect(screen.getByText(/Over budget by/)).toBeInTheDocument();
   });

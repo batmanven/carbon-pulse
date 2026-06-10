@@ -1,6 +1,15 @@
 "use client";
 import { useState } from "react";
-import { useStore } from "@/lib/store";
+import {
+  useActivities,
+  useAddActivity,
+  useSetRecommendations,
+  useSetInsight,
+  useSetIsProcessing,
+  useIsProcessing,
+  useRegion,
+  useDailyBudget,
+} from "@/lib/store";
 import { motion } from "framer-motion";
 import { Terminal, Send } from "lucide-react";
 import { toast } from "sonner";
@@ -8,7 +17,14 @@ import { parseActivity, buildActivity, fetchAIFeedback } from "@/lib/services/ac
 
 export function ActivityLog() {
   const [input, setInput] = useState("");
-  const { activities, addActivity, setRecommendations, setInsight, setIsProcessing, isProcessing, region, dailyBudget } = useStore();
+  const activities = useActivities();
+  const addActivity = useAddActivity();
+  const setRecommendations = useSetRecommendations();
+  const setInsight = useSetInsight();
+  const setIsProcessing = useSetIsProcessing();
+  const isProcessing = useIsProcessing();
+  const region = useRegion();
+  const dailyBudget = useDailyBudget();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

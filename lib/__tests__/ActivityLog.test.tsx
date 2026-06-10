@@ -6,29 +6,42 @@ const mockSetRecommendations = jest.fn();
 const mockSetInsight = jest.fn();
 const mockSetIsProcessing = jest.fn();
 
-let mockIsProcessing = false;
+const mockIsProcessing = false;
+
+ const mockStoreState = {
+  activities: [],
+  addActivity: mockAddActivity,
+  setRecommendations: mockSetRecommendations,
+  setInsight: mockSetInsight,
+  setIsProcessing: mockSetIsProcessing,
+  isProcessing: mockIsProcessing,
+  region: "global",
+  dailyBudget: 10,
+};
 
 jest.mock("../../lib/store", () => ({
-  useStore: () => ({
-    activities: [],
-    addActivity: mockAddActivity,
-    setRecommendations: mockSetRecommendations,
-    setInsight: mockSetInsight,
-    setIsProcessing: mockSetIsProcessing,
-    isProcessing: mockIsProcessing,
-    region: "global",
-    dailyBudget: 10,
-  }),
+  useActivities: () => mockStoreState.activities,
+  useAddActivity: () => mockStoreState.addActivity,
+  useSetRecommendations: () => mockStoreState.setRecommendations,
+  useSetInsight: () => mockStoreState.setInsight,
+  useSetIsProcessing: () => mockStoreState.setIsProcessing,
+  useIsProcessing: () => mockStoreState.isProcessing,
+  useRegion: () => mockStoreState.region,
+  useDailyBudget: () => mockStoreState.dailyBudget,
 }));
 
 global.fetch = jest.fn();
 
 beforeEach(() => {
   jest.clearAllMocks();
-  mockIsProcessing = false;
+  mockStoreState.isProcessing = false;
   (global.fetch as jest.Mock).mockResolvedValue({
     ok: true,
-    json: async () => ({ category: "transport", subCategory: "car", amount: 10 }),
+    json: async () => ({
+      category: "transport",
+      subCategory: "car",
+      amount: 10,
+    }),
   });
 });
 
@@ -65,7 +78,7 @@ describe("ActivityLog", () => {
   });
 
   it("disables button while processing", () => {
-    mockIsProcessing = true;
+    mockStoreState.isProcessing = true;
     render(<ActivityLog />);
     const input = screen.getByRole("textbox");
     fireEvent.change(input, { target: { value: "drove 10km" } });

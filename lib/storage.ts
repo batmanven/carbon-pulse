@@ -22,10 +22,7 @@ export function getActivities(): Activity[] {
   }
 }
 
-export function setActivities(activities: Activity[]): void {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(activities));
-}
+
 
 export function getBudget(): number {
   if (typeof window === "undefined") return DEFAULTS.DAILY_BUDGET;
@@ -40,9 +37,4 @@ export function setBudget(budget: number): void {
   localStorage.setItem(STORAGE_KEYS.BUDGET, String(budget));
 }
 
-export function clearAll(): void {
-  if (typeof window === "undefined") return;
-  localStorage.removeItem(STORAGE_KEYS.ACTIVITIES);
-  localStorage.removeItem(STORAGE_KEYS.BUDGET);
-  localStorage.removeItem(STORAGE_KEYS.REGION);
-}
+

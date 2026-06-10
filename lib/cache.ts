@@ -1,6 +1,6 @@
 import { CACHE_CLEANUP_INTERVAL_MS, CACHE_TTL_MS } from "@/lib/constants/cache";
 
-export class AICache<T = unknown> {
+class AICache<T = unknown> {
   private cache = new Map<string, { value: T; timestamp: number }>();
   private readonly TTL_MS: number;
   private cleanupInterval: ReturnType<typeof setInterval> | null = null;

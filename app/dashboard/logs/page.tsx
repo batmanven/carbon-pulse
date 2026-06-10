@@ -1,10 +1,11 @@
 "use client";
-import { useStore } from "@/lib/store";
+import { useActivities, useClearActivities } from "@/lib/store";
 import { format } from "date-fns";
 import { Trash2, FileText } from "lucide-react";
 
 export default function LogsPage() {
-  const { activities, clearActivities } = useStore();
+  const activities = useActivities();
+  const clearActivities = useClearActivities();
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">

@@ -1,4 +1,4 @@
-export const CO2_EQUIVALENTS = [
+const CO2_EQUIVALENTS = [
   { threshold: 0.01, text: "charging a smartphone", value: 0.008 },
   { threshold: 0.5, text: "boiling a kettle", value: 0.015 },
   { threshold: 2.0, text: "a load of laundry", value: 0.6 },

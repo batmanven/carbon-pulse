@@ -5,10 +5,10 @@ import { ChatInput } from "@/components/chat/ChatInput";
 import { SuggestedPrompts } from "@/components/chat/SuggestedPrompts";
 import { LoadingIndicator } from "@/components/chat/LoadingIndicator";
 import { EmptyState } from "@/components/chat/EmptyState";
-import { useStore } from "@/lib/store";
+import { useActivities } from "@/lib/store";
 
 export default function AssistantPage() {
-  const { activities } = useStore();
+  const activities = useActivities();
   const {
     messages,
     input,

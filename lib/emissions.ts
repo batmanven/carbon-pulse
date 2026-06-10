@@ -63,7 +63,7 @@ export const EMISSION_FACTOR_SOURCE = {
   SHOPPING: "UK DEFRA 2024",
 } as const;
 
-export function getRegionFactor(region: string): number {
+function getRegionFactor(region: string): number {
   return REGION_GRID_FACTORS[region]?.factor ?? 1.0;
 }
 

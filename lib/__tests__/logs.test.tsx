@@ -1,15 +1,35 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { render, screen, fireEvent } from "@testing-library/react";
 import LogsPage from "../../app/dashboard/logs/page";
 
 const mockClearActivities = jest.fn();
 
-const baseState = {
+const baseState: any = {
   activities: [],
   clearActivities: mockClearActivities,
 };
 
+let mockStoreState = baseState;
+
 jest.mock("../../lib/store", () => ({
-  useStore: jest.fn(() => baseState),
+  useStore: jest.fn(() => mockStoreState),
+  useActivities: () => mockStoreState.activities,
+  useDailyFootprint: () => mockStoreState.dailyFootprint,
+  useBudgetUsed: () => mockStoreState.budgetUsed,
+  useDailyBudget: () => mockStoreState.dailyBudget,
+  useWeeklyTrend: () => mockStoreState.weeklyTrend,
+  useRecommendations: () => mockStoreState.recommendations,
+  useChallenges: () => mockStoreState.challenges,
+  useInsight: () => mockStoreState.insight,
+  useLoadSampleData: () => mockStoreState.loadSampleData,
+  useToggleChallenge: () => mockStoreState.toggleChallenge,
+  useAddActivity: () => mockStoreState.addActivity,
+  useSetRecommendations: () => mockStoreState.setRecommendations,
+  useSetInsight: () => mockStoreState.setInsight,
+  useSetIsProcessing: () => mockStoreState.setIsProcessing,
+  useIsProcessing: () => mockStoreState.isProcessing,
+  useRegion: () => mockStoreState.region,
+  useClearActivities: () => mockStoreState.clearActivities,
 }));
 
 jest.mock("lucide-react", () => ({
@@ -21,12 +41,12 @@ jest.mock("date-fns", () => ({
   format: () => "Jun 8, 2026 12:00",
 }));
 
-const { useStore } = jest.requireMock("../../lib/store");
+
 
 describe("LogsPage", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    (useStore as jest.Mock).mockReturnValue(baseState);
+    mockStoreState = baseState;
   });
 
   it("renders the header", () => {
@@ -46,12 +66,12 @@ describe("LogsPage", () => {
   });
 
   it("renders table headers when activities exist", () => {
-    (useStore as jest.Mock).mockReturnValue({
+    mockStoreState = {
       ...baseState,
       activities: [
         { id: "1", category: "transport", subCategory: "car", amount: 10, unit: "km", co2e: 1.7, timestamp: "2026-06-08T12:00:00Z", equivalent: "= 212x phone", rawInput: "drove 10km" },
       ],
-    });
+    };
     render(<LogsPage />);
     expect(screen.getByText("Date")).toBeInTheDocument();
     expect(screen.getByText("Category")).toBeInTheDocument();
@@ -62,12 +82,12 @@ describe("LogsPage", () => {
   });
 
   it("renders activity data in table", () => {
-    (useStore as jest.Mock).mockReturnValue({
+    mockStoreState = {
       ...baseState,
       activities: [
         { id: "1", category: "transport", subCategory: "car", amount: 10, unit: "km", co2e: 1.7, timestamp: "2026-06-08T12:00:00Z", equivalent: "= 212x phone", rawInput: "drove 10km" },
       ],
-    });
+    };
     render(<LogsPage />);
     expect(screen.getByText("transport › car")).toBeInTheDocument();
     expect(screen.getByText("drove 10km")).toBeInTheDocument();
@@ -77,47 +97,47 @@ describe("LogsPage", () => {
   });
 
   it("shows Clear Data button when activities exist", () => {
-    (useStore as jest.Mock).mockReturnValue({
+    mockStoreState = {
       ...baseState,
       activities: [
         { id: "1", category: "transport", subCategory: "car", amount: 10, unit: "km", co2e: 1.7, timestamp: "2026-06-08T12:00:00Z", equivalent: "test", rawInput: "drove" },
       ],
-    });
+    };
     render(<LogsPage />);
     expect(screen.getByText("Clear Data")).toBeInTheDocument();
   });
 
   it("calls clearActivities when Clear Data is clicked and confirmed", () => {
     window.confirm = jest.fn().mockReturnValue(true);
-    (useStore as jest.Mock).mockReturnValue({
+    mockStoreState = {
       ...baseState,
       activities: [
         { id: "1", category: "transport", subCategory: "car", amount: 10, unit: "km", co2e: 1.7, timestamp: "2026-06-08T12:00:00Z", equivalent: "test", rawInput: "drove" },
       ],
-    });
+    };
     render(<LogsPage />);
     fireEvent.click(screen.getByText("Clear Data"));
     expect(mockClearActivities).toHaveBeenCalled();
   });
 
   it("displays formatted date from activity", () => {
-    (useStore as jest.Mock).mockReturnValue({
+    mockStoreState = {
       ...baseState,
       activities: [
         { id: "1", category: "transport", subCategory: "car", amount: 10, unit: "km", co2e: 1.7, timestamp: "2026-06-08T12:00:00Z", equivalent: "test", rawInput: "drove" },
       ],
-    });
+    };
     render(<LogsPage />);
     expect(screen.getByText("Jun 8, 2026 12:00")).toBeInTheDocument();
   });
 
   it("shows 'Manual entry' when no rawInput", () => {
-    (useStore as jest.Mock).mockReturnValue({
+    mockStoreState = {
       ...baseState,
       activities: [
         { id: "1", category: "transport", subCategory: "car", amount: 10, unit: "km", co2e: 1.7, timestamp: "2026-06-08T12:00:00Z", equivalent: "test" },
       ],
-    });
+    };
     render(<LogsPage />);
     expect(screen.getByText("Manual entry")).toBeInTheDocument();
   });

@@ -1,6 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useStore } from "@/lib/store";
+import {
+  useActivities,
+  useDailyFootprint,
+  useBudgetUsed,
+  useDailyBudget,
+  useWeeklyTrend,
+  useRecommendations,
+  useChallenges,
+  useInsight,
+  useLoadSampleData,
+  useToggleChallenge,
+} from "@/lib/store";
 import { ActivityLog } from "@/components/ActivityLog";
 import { FootprintCard } from "@/components/FootprintCard";
 import { RecommendationsList } from "@/components/RecommendationsList";
@@ -11,7 +22,16 @@ import { Leaf, Database, Zap, TrendingDown } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Dashboard() {
-  const { activities, dailyFootprint, budgetUsed, dailyBudget, weeklyTrend, recommendations, challenges, insight, loadSampleData, toggleChallenge } = useStore();
+  const activities = useActivities();
+  const dailyFootprint = useDailyFootprint();
+  const budgetUsed = useBudgetUsed();
+  const dailyBudget = useDailyBudget();
+  const weeklyTrend = useWeeklyTrend();
+  const recommendations = useRecommendations();
+  const challenges = useChallenges();
+  const insight = useInsight();
+  const loadSampleData = useLoadSampleData();
+  const toggleChallenge = useToggleChallenge();
 
   const [mounted, setMounted] = useState(false);
 
