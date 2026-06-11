@@ -1,7 +1,12 @@
 import { TrendingDown } from "lucide-react";
 import type { Recommendation } from "@/lib/types";
 
+/**
+ * Props for the SavingsBanner component.
+ * Summarizes total potential annual carbon savings from recommendations.
+ */
 interface SavingsBannerProps {
+  /** List of recommendations to aggregate savings from */
   recommendations: Recommendation[];
 }
 

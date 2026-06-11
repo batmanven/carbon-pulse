@@ -1,3 +1,7 @@
+/**
+ * Predefined sustainability challenges users can participate in.
+ * Each challenge has an id, title, and description.
+ */
 export const CHALLENGES = [
   {
     id: "meatless-mon",

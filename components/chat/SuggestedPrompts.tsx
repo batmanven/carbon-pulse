@@ -8,9 +8,16 @@ const SUGGESTED_PROMPTS = [
   "Am I on track with my daily budget?",
 ];
 
+/**
+ * Props for the SuggestedPrompts component.
+ * Shows clickable prompt suggestions for new chat users.
+ */
 interface SuggestedPromptsProps {
+  /** Callback invoked when a suggested prompt is clicked */
   onSendMessage: (prompt: string) => void;
+  /** Array-like object of logged activities (uses .length to check if any exist) */
   activities: { length: number };
+  /** Array-like object of chat messages (uses .length to determine visibility) */
   messages: { length: number };
 }
 

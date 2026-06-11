@@ -21,7 +21,12 @@ const tooltipStyle = {
   boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
 };
 
+/**
+ * Props for the CategoryChart component.
+ * Renders a donut chart breaking down emissions by category.
+ */
 interface Props {
+  /** Array of category data points, each with a name (e.g. "transport") and value in kg */
   data: { name: string; value: number }[];
 }
 

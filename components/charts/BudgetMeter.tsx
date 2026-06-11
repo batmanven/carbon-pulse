@@ -1,9 +1,17 @@
 import { ProgressBar } from "@/components/ui/ProgressBar";
 
+/**
+ * Props for the BudgetMeter component.
+ * Displays a budget meter with labels, a progress bar, and an insight message.
+ */
 interface BudgetMeterProps {
+  /** Percentage of daily carbon budget used (0–100) */
   budgetUsed: number;
+  /** Today's total carbon footprint in kg CO₂e */
   dailyFootprint: number;
+  /** Daily carbon budget limit in kg CO₂e */
   dailyBudget: number;
+  /** Optional insight text; falls back to a default message if null or omitted */
   insight?: string | null;
 }
 

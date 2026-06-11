@@ -29,6 +29,12 @@ Return ONLY a JSON object with this exact structure, with no markdown formatting
 {delimiter}
 `.trim();
 
+/**
+ * Builds the system prompt for the NLP parse agent.
+ * @param input - Raw user text describing an activity.
+ * @param region - Optional user region string for regional context.
+ * @returns A fully assembled prompt string ready to send to the LLM.
+ */
 export function buildParsePrompt(input: string, region?: string): string {
   const regionContext = region
     ? `User's Region: ${region}`

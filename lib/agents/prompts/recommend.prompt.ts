@@ -23,6 +23,12 @@ User Activities:
 {activitiesContext}
 `.trim();
 
+/**
+ * Builds the system prompt for the recommendation generation agent.
+ * @param activitiesContext - Formatted string of the user's recent activities.
+ * @param regionContext - Regional context string to include in the prompt.
+ * @returns A fully assembled prompt string ready to send to the LLM.
+ */
 export function buildRecommendPrompt(
   activitiesContext: string,
   regionContext: string,

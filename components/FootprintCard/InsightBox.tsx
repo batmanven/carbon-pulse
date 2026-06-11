@@ -1,4 +1,9 @@
+/**
+ * Props for the InsightBox component.
+ * Displays a contextual insight message inside the footprint card.
+ */
 interface InsightBoxProps {
+  /** Insight text to display, or null to show a default message */
   insight: string | null;
 }
 

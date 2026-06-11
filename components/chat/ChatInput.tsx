@@ -1,11 +1,20 @@
 "use client";
 import { Send } from "lucide-react";
 
+/**
+ * Props for the ChatInput component.
+ * A text input form for sending messages to the AI chat assistant.
+ */
 interface ChatInputProps {
+  /** Current input field value */
   input: string;
+  /** State setter to update the input value */
   setInput: (value: string) => void;
+  /** When true, the input is disabled and loading state is shown */
   isLoading: boolean;
+  /** Form submit handler */
   handleSubmit: (e: React.FormEvent) => void;
+  /** Ref to the underlying input element for programmatic focus */
   inputRef: React.RefObject<HTMLInputElement | null>;
 }
 

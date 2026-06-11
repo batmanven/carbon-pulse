@@ -1,6 +1,11 @@
 import { Database, Leaf } from "lucide-react";
 
+/**
+ * Props for the EmptyDashboard component.
+ * Shown when no activities have been logged, with an option to load demo data.
+ */
 interface EmptyDashboardProps {
+  /** Callback to load sample/demo activity data */
   onLoadSampleData: () => void;
 }
 

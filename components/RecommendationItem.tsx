@@ -1,9 +1,16 @@
 import { motion } from "framer-motion";
 import type { Recommendation } from "@/lib/types";
 
+/**
+ * Props for the RecommendationItem component.
+ * Renders a single recommendation card with animation, available in compact or detailed layout.
+ */
 interface RecommendationItemProps {
+  /** The recommendation data to display */
   recommendation: Recommendation;
+  /** Index used to stagger the entrance animation */
   index: number;
+  /** Layout variant: "compact" for inline cards, "detailed" for expanded cards (defaults to "compact") */
   variant?: "compact" | "detailed";
 }
 

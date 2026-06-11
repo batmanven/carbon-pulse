@@ -1,8 +1,17 @@
+/**
+ * Props for the ProgressBar component.
+ * A styled progress bar with customizable track, fill, and height via Tailwind classes.
+ */
 interface ProgressBarProps {
+  /** Current progress value between 0 and 100 */
   value: number;
+  /** Tailwind class for the track (background) of the progress bar */
   trackClassName: string;
+  /** Tailwind class for the filled portion of the progress bar */
   fillClassName: string;
+  /** Tailwind height class for the progress bar (defaults to "h-3") */
   heightClassName?: string;
+  /** Accessible label describing what the progress bar represents */
   ariaLabel?: string;
 }
 

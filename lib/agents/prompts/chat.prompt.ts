@@ -1,3 +1,11 @@
+/**
+ * Builds the system prompt for the conversational chat agent.
+ * @param activitiesContext - Formatted string of the user's recent activities.
+ * @param totalEmissions - Total emissions across all logged activities in kg CO₂e.
+ * @param activityCount - Number of activities the user has logged.
+ * @param message - The user's current chat message.
+ * @returns A fully assembled prompt string ready to send to the LLM.
+ */
 export function buildChatPrompt(
   activitiesContext: string,
   totalEmissions: number,

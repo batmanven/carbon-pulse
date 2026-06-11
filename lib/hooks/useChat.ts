@@ -14,6 +14,12 @@ interface UseChatOptions {
   activities: Activity[];
 }
 
+/**
+ * Custom React hook for managing an AI chat conversation about the user's carbon footprint.
+ * Handles message state, input, loading state, and sending messages via the chat service.
+ * @param options - Configuration object containing the user's activity list.
+ * @returns An object with messages, input state, refs, and action handlers for the chat UI.
+ */
 export function useChat({ activities }: UseChatOptions) {
   const [messages, setMessages] = useState<ChatMessage[]>([INITIAL_MESSAGE]);
   const [input, setInput] = useState("");

@@ -10,6 +10,14 @@ Rules:
 4. Do NOT use markdown, emojis, or hashtags.
 `.trim();
 
+/**
+ * Builds the system prompt for the insight generation agent.
+ * @param percentage - Percentage of the daily carbon budget consumed so far.
+ * @param budget - Daily carbon budget in kg CO₂e.
+ * @param todayEmissions - Total emissions for today in kg CO₂e.
+ * @param regionContext - Regional context string to include in the prompt.
+ * @returns A fully assembled prompt string ready to send to the LLM.
+ */
 export function buildInsightPrompt(
   percentage: number,
   budget: number,

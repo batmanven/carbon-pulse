@@ -1,9 +1,17 @@
 import type { ReactNode } from "react";
 
+/**
+ * Props for the PageHeader component.
+ * Renders a page header with a title, description, optional icon, and trailing content.
+ */
 interface PageHeaderProps {
+  /** Main heading text */
   title: string;
+  /** Subtext describing the page */
   description: string;
+  /** Optional icon node displayed next to the title */
   icon?: ReactNode;
+  /** Optional content rendered on the right side of the header (e.g. action buttons) */
   trailing?: ReactNode;
 }
 

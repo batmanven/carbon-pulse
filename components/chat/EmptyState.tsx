@@ -1,6 +1,11 @@
 "use client";
 
+/**
+ * Props for the EmptyState component.
+ * Displays a prompt to log activities when none exist yet.
+ */
 interface EmptyStateProps {
+  /** Array-like object of logged activities (uses .length to determine visibility) */
   activities: { length: number };
 }
 

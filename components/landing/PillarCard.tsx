@@ -1,11 +1,20 @@
 "use client";
 import { BarChart3, Target, TrendingDown, Zap } from "lucide-react";
 
+/**
+ * Props for the PillarCard component.
+ * Displays a feature pillar with an icon, title, and description on the landing page.
+ */
 interface PillarCardProps {
+  /** Display title for the pillar */
   title: string;
+  /** Description text explaining the pillar */
   description: string;
+  /** Icon node rendered inside the card */
   icon: React.ReactNode;
+  /** Tailwind background color class for the icon container */
   iconBgColor: string;
+  /** Tailwind text color class for the icon */
   iconColor: string;
 }
 

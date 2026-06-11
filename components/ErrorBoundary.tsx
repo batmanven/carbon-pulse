@@ -3,7 +3,12 @@
 import { Component, type ReactNode } from "react";
 import { AlertTriangle } from "lucide-react";
 
+/**
+ * Props for the ErrorBoundary component.
+ * Catches JavaScript errors in child components and displays a fallback UI.
+ */
 interface Props {
+  /** Child components to wrap with error boundary protection */
   children: ReactNode;
 }
 

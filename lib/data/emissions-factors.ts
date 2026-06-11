@@ -1,6 +1,7 @@
 type FactorEntry = { value: number; unit: string; description: string };
 type EmissionFactorMap = Record<string, Record<string, FactorEntry>>;
 
+/** Emission factors for transport, food, energy, and shopping sub-categories, keyed by category then sub-category. */
 export const EMISSION_FACTORS: EmissionFactorMap = {
   transport: {
     car: { value: 0.17, unit: "km", description: "Average gasoline car" },
@@ -35,6 +36,7 @@ export const EMISSION_FACTORS: EmissionFactorMap = {
   },
 };
 
+/** Regional grid electricity emission factors, keyed by region ID. Each entry has a display label and a multiplier. */
 export const REGION_GRID_FACTORS: Record<string, { label: string; factor: number }> = {
   global: { label: "Global Average", factor: 1.0 },
   "us-east": { label: "US (Eastern Grid)", factor: 0.85 },
@@ -53,10 +55,13 @@ export const REGION_GRID_FACTORS: Record<string, { label: string; factor: number
   brazil: { label: "Brazil", factor: 0.25 },
 };
 
+/** Default region identifier used when no user region is specified. */
 export const DEFAULT_REGION = "global";
 
+/** Average grid electricity emission factor in kg CO₂e per kWh (global average). */
 export const GRID_AVERAGE_KG_PER_KWH = 0.4;
 
+/** Data sources used for each emission factor category. */
 export const EMISSION_FACTOR_SOURCE = {
   TRANSPORT: "UK DEFRA 2024",
   FOOD: "Poore & Nemecek 2018",

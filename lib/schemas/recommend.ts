@@ -1,11 +1,13 @@
 import { z } from "zod";
 import { activitySchema } from "./activity";
 
+/** Zod schema for the input to the recommendation agent (activity history and optional region). */
 export const recommendSchema = z.object({
   history: z.array(activitySchema),
   region: z.string().optional(),
 });
 
+/** Zod schema for a single AI-generated recommendation. */
 export const recommendationSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1).max(100),
@@ -14,4 +16,5 @@ export const recommendationSchema = z.object({
   difficulty: z.enum(["Easy", "Medium", "Hard"]),
 });
 
+/** Zod schema for an array of recommendations returned by the recommendation agent. */
 export const recommendationArraySchema = z.array(recommendationSchema);

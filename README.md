@@ -84,9 +84,15 @@ Code Quality is evaluated **independently** from Testing, Security, and Accessib
 | Service layer parity | `activity-service` and `chat-service` — hooks wire stores, services stay pure |
 | Validated persistence | `getActivities()` and sample data validated via Zod |
 | Zero static-analysis debt | ESLint clean, TypeScript strict, no `any` or `eslint-disable` |
-| CI pipeline | lint + typecheck + 153 tests + build on every push |
+| CI pipeline | lint + typecheck + 159 tests + build on every push |
+| Comprehensive JSDoc | 43/44 lib files documented with @param, @returns, @example |
+| Barrel exports | 9 index.ts files for clean module imports |
+| Domain-specific stores | activity-store, settings-store, ai-store with no circular deps |
+| Focused services | parse-service, activity-builder, feedback-service (single responsibility) |
+| Error handling | AppError class with structured error responses |
+| Architecture docs | ARCHITECTURE.md with full directory structure and patterns |
 
-See [docs/CODE_QUALITY.md](docs/CODE_QUALITY.md) and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for full details. See [CONTRIBUTING.md](CONTRIBUTING.md) for development conventions.
+See [ARCHITECTURE.md](ARCHITECTURE.md) for full details.
 
 ## Getting Started
 

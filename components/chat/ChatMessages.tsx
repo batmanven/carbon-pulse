@@ -1,7 +1,12 @@
 "use client";
 import { Bot, User } from "lucide-react";
 
+/**
+ * Props for the ChatMessages component.
+ * Renders a list of chat messages with distinct styles for user and assistant roles.
+ */
 interface ChatMessagesProps {
+  /** Array of message objects, each with a role and content string */
   messages: { role: "user" | "assistant"; content: string }[];
 }
 

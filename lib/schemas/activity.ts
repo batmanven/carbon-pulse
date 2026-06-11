@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+/** Zod enum schema for valid activity categories. */
 export const activityCategorySchema = z.enum([
   "transport",
   "food",
@@ -7,6 +8,7 @@ export const activityCategorySchema = z.enum([
   "shopping",
 ]);
 
+/** Zod schema for a single carbon-tracked activity record. */
 export const activitySchema = z.object({
   id: z.string(),
   timestamp: z.string(),
@@ -19,4 +21,5 @@ export const activitySchema = z.object({
   rawInput: z.string().optional(),
 });
 
+/** Zod schema for an array of activity records. */
 export const activitiesArraySchema = z.array(activitySchema);

@@ -1,6 +1,11 @@
 import { ProgressBar } from "@/components/ui/ProgressBar";
 
+/**
+ * Props for the Meter component.
+ * A simple progress bar showing daily budget usage percentage.
+ */
 interface MeterProps {
+  /** Percentage of daily budget consumed (0–100) */
   budgetUsed: number;
 }
 
