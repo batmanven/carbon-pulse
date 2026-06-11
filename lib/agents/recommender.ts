@@ -2,6 +2,10 @@ import { getAIClient, generateContentSafe } from "@/lib/agents/client";
 import { Activity, Recommendation } from "@/lib/types";
 import { getRegionLabel } from "@/lib/emissions";
 import { recommendationArraySchema } from "@/lib/schemas/recommend";
+import {
+  formatActivitySummaryLine,
+  formatRecentActivities,
+} from "@/lib/utils/activity-context";
 import { buildRecommendPrompt } from "./prompts/recommend.prompt";
 
 export async function getRecommendations(
@@ -12,10 +16,10 @@ export async function getRecommendations(
 
   const ai = getAIClient();
 
-  const recentActivities = activities.slice(-30);
-  const activitiesContext = recentActivities
-    .map((a) => `${a.amount}${a.unit} of ${a.subCategory} (${a.co2e}kg CO2)`)
-    .join("\n");
+  const activitiesContext = formatRecentActivities(
+    activities,
+    formatActivitySummaryLine,
+  );
 
   const regionContext = region
     ? `\nUser's Region: ${getRegionLabel(region)} — factor this into your recommendations (e.g., grid mix, transit availability, local food systems).`

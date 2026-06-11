@@ -9,7 +9,11 @@ CarbonKeeper is structured for maintainability, modularity, and consistency — 
 | Layered architecture | Strict UI → hook → service → API → agent separation | `docs/ARCHITECTURE.md` |
 | Schema-driven types | Domain types derived from Zod via `z.infer` | `lib/schemas/`, `lib/types.ts` |
 | Dependency injection | Services accept deps; hooks wire stores | `lib/services/activity-service.ts`, `lib/hooks/useLogActivity.ts` |
-| DRY components | Shared `PageHeader`, `RecommendationItem`, `BudgetMeter` | `components/layout/`, `components/charts/` |
+| DRY components | Shared `PageHeader`, `RecommendationItem`, `BudgetMeter`, `ProgressBar`, `EmptyDashboard`, `SavingsBanner` | `components/` |
+| Service layer parity | `chat-service.ts` mirrors `activity-service.ts` pattern | `lib/services/` |
+| Validated persistence | `getActivities()` and `loadSampleData` use Zod | `lib/storage.ts`, `activity-store.ts` |
+| Shared formatters | Activity context strings centralized | `lib/utils/activity-context.ts` |
+| Schema-complete types | `Challenge` and `ChatMessage` typed consistently | `lib/schemas/challenge.ts`, `lib/types.ts` |
 | Persistence abstraction | Single storage module for all `localStorage` | `lib/storage.ts` |
 | API consistency | Factory pattern for all AI routes | `lib/api/route-factory.ts` |
 | Agent consistency | Shared safe Gemini wrappers | `lib/agents/client.ts` |

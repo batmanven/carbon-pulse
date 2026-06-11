@@ -64,7 +64,7 @@ User Input ("I drove 12km")
 - **AI Layer**: Google Gemini API (via `@google/genai` SDK) with keyword fallback when unavailable
 - **State**: Zustand
 - **Validation**: Zod
-- **Testing**: Jest + React Testing Library (153 tests)
+- **Testing**: Jest + React Testing Library (159 tests)
 - **Security**: Content-Security-Policy headers, rate limiting, server-side AI calls, Zod input validation on every endpoint
 
 ---
@@ -80,7 +80,9 @@ Code Quality is evaluated **independently** from Testing, Security, and Accessib
 | Dependency injection | `logActivityWithDeps` — services never import Zustand |
 | DRY components | Shared `PageHeader`, `RecommendationItem`, `BudgetMeter` |
 | Persistence abstraction | All `localStorage` via `lib/storage.ts` |
-| Agent consistency | All agents use `generateContentSafe` / `generateTextSafe` |
+| Agent consistency | All agents use `generateContentSafe` / `generateTextSafe`; prompts in `lib/agents/prompts/` |
+| Service layer parity | `activity-service` and `chat-service` — hooks wire stores, services stay pure |
+| Validated persistence | `getActivities()` and sample data validated via Zod |
 | Zero static-analysis debt | ESLint clean, TypeScript strict, no `any` or `eslint-disable` |
 | CI pipeline | lint + typecheck + 153 tests + build on every push |
 
@@ -116,7 +118,7 @@ GEMINI_API_KEY="your-api-key-here"
 ```bash
 npm run dev       # Development server at http://localhost:3000
 npm run build     # Production build
-npm run test      # Test suite (153 tests)
+npm run test      # Test suite (159 tests)
 npm run lint      # ESLint check
 npm run typecheck # TypeScript type check
 ```

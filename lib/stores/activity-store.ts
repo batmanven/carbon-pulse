@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { Activity } from "@/lib/types";
+import { activitiesArraySchema } from "@/lib/schemas/activity";
 import {
   getActivities,
   getBudget,
@@ -54,7 +55,10 @@ export const useActivityStore = create<ActivityState>((set) => ({
   loadSampleData: async () => {
     try {
       const res = await fetch("/data/sample-activities.json");
-      const data: Activity[] = await res.json();
+      const raw = await res.json();
+      const parsed = activitiesArraySchema.safeParse(raw);
+      if (!parsed.success) return;
+      const data = parsed.data;
       setActivities(data);
       set((state) => ({
         activities: data,

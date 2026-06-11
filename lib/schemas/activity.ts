@@ -18,3 +18,5 @@ export const activitySchema = z.object({
   equivalent: z.string(),
   rawInput: z.string().optional(),
 });
+
+export const activitiesArraySchema = z.array(activitySchema);

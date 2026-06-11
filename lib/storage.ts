@@ -1,4 +1,5 @@
 import { Activity } from "@/lib/types";
+import { activitiesArraySchema } from "@/lib/schemas/activity";
 import { DEFAULT_REGION } from "@/lib/emissions";
 import { STORAGE_KEYS, DEFAULTS } from "@/lib/constants/storage";
 
@@ -16,7 +17,10 @@ export function getActivities(): Activity[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.ACTIVITIES);
-    return raw ? JSON.parse(raw) : [];
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    const result = activitiesArraySchema.safeParse(parsed);
+    return result.success ? result.data : [];
   } catch {
     return [];
   }
@@ -44,4 +48,3 @@ export function setBudget(budget: number): void {
   if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEYS.BUDGET, String(budget));
 }
-

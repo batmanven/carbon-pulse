@@ -52,6 +52,11 @@ describe("storage", () => {
     expect(localStorageStore.CARBON_ACTIVITIES).toBeUndefined();
   });
 
+  it("returns empty array for invalid stored activities", () => {
+    localStorageStore.CARBON_ACTIVITIES = JSON.stringify([{ invalid: true }]);
+    expect(getActivities()).toEqual([]);
+  });
+
   it("persists budget and region", () => {
     setBudget(15);
     setRegion("india");
