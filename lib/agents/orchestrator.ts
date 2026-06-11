@@ -6,6 +6,14 @@ import { buildParsePrompt } from "./prompts/parse.prompt";
 
 export type ParseResult = Partial<z.infer<typeof parseOutputSchema>>;
 
+/**
+ * Parses a natural language input string into structured activity data using the AI agent.
+ * Handles graceful fallbacks and strict Zod validation on the output.
+ * 
+ * @param input - The raw natural language input (e.g., "drove 10 miles").
+ * @param region - Optional region context to improve AI categorization.
+ * @returns A Promise resolving to a strongly-typed ParseResult.
+ */
 export async function parseNaturalLanguage(
   input: string,
   region?: string,

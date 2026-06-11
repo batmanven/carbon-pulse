@@ -17,6 +17,14 @@ export interface AIFeedbackResult {
   error?: string;
 }
 
+/**
+ * Orchestrates the logging of a new carbon activity by parsing the input, calculating emissions,
+ * and asynchronously fetching AI recommendations and insights.
+ * 
+ * @param input - The raw natural language input from the user (e.g., "I drove 20 miles").
+ * @param deps - The injected dependencies containing region, budget, state arrays, and dispatch functions.
+ * @returns A Promise that resolves when the activity is logged. AI feedback continues asynchronously.
+ */
 export async function logActivityWithDeps(
   input: string,
   deps: LogActivityDeps,

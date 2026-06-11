@@ -1,33 +1,13 @@
 "use client";
 import { Settings2, Database, Globe } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
-import { useSettingsStore } from "@/lib/stores/settings-store";
-import { useActivityStore } from "@/lib/stores/activity-store";
 import { REGION_GRID_FACTORS } from "@/lib/emissions";
 import { PageHeader } from "@/components/layout/PageHeader";
 import type { JSX } from "react";
+import { useSettingsForm } from "@/lib/hooks/useSettingsForm";
 
 export default function SettingsPage(): JSX.Element {
-  const dailyBudget = useSettingsStore((s) => s.dailyBudget);
-  const region = useSettingsStore((s) => s.region);
-  const setDailyBudget = useSettingsStore((s) => s.setDailyBudget);
-  const setRegion = useSettingsStore((s) => s.setRegion);
-  const recalculate = useActivityStore((s) => s.recalculate);
-
-  const [budget, setBudget] = useState(dailyBudget.toString());
-  const [regionLocal, setRegionLocal] = useState(region);
-
-  const handleSave = (e: React.FormEvent) => {
-    e.preventDefault();
-    const budgetNum = parseFloat(budget);
-    if (!isNaN(budgetNum) && budgetNum > 0) {
-      setDailyBudget(budgetNum);
-      recalculate(budgetNum);
-    }
-    setRegion(regionLocal);
-    toast.success("Settings saved successfully!");
-  };
+  const { budget, setBudget, regionLocal, setRegionLocal, handleSave } =
+    useSettingsForm();
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
